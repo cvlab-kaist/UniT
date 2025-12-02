@@ -1,0 +1,1920 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>MV-TAP: Tracking Any Point in Multi-View Videos</title>
+    <meta
+        content="MV-TAP: Tracking Any Point in Multi-View Videos"
+        name="description" />
+    <meta
+        content="MV-TAP: Tracking Any Point in Multi-View Videos"
+        property="og:title" />
+    <meta
+        content="MV-TAP: Tracking Any Point in Multi-View Videos"
+        property="og:description" />
+    <meta
+        content="MV-TAP: Tracking Any Point in Multi-View Videos"
+        property="twitter:title" />
+    <meta
+        content="MV-TAP: Tracking Any Point in Multi-View Videos"
+        property="twitter:description" />
+    <meta property="og:type" content="website" />
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Varela+Round&display=swap"
+        rel="stylesheet">
+    <link href="style.css?" rel="stylesheet" type="text/css" />
+
+    <!-- 🔎 Added minimal CSS for click‑to‑zoom lightbox -->
+    <style>
+      /* make images clearly zoomable */
+      img.zoomable { cursor: zoom-in; transition: transform .2s ease; }
+
+      /* fullscreen overlay */
+      .lightbox-overlay {
+        position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+        background: rgba(0,0,0,.9); z-index: 10000;
+      }
+      .lightbox-overlay.active { display: flex; }
+      .lightbox-overlay img { max-width: 95vw; max-height: 95vh; box-shadow: 0 10px 40px rgba(0,0,0,.6); border-radius: 8px; }
+      /* show zoom-out cursor while overlay is open */
+      .lightbox-overlay, .lightbox-overlay * { cursor: zoom-out; }
+
+      /* prevent background scroll when overlay is open */
+      body.no-scroll { overflow: hidden; }
+
+      .title-video {
+          width: 100px;  
+          height: 100px; 
+          object-fit: cover; 
+          object-position: center;
+          border-radius: 50%;
+          border: 2px solid #ccc;
+      }
+    </style>
+
+    <!-- MathJax for LaTeX rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$','$$'], ['\\[','\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container">
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#abstract">Overview</a></li>
+                    <li><a href="#motivation">Motivation</a></li>
+                    <li><a href="#method">Method</a></li>
+                    <li><a href="#qual-results">Qualitative Results</a></li>
+                    <li><a href="#quant-results">Quantitative Results</a></li>
+                    <li><a href="#ablation-studies">Ablation Studies</a></li>
+                    <!-- <li><a href="#analysis">Analysis</a></li> -->
+                    <li><a href="#citation">Citation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <div class="container">
+            <div class="title-row">
+                <div class="title-flex">
+                    <video class="title-video" autoplay muted loop playsinline>
+                        <!-- <source src="images/emoji.webm" type="video/webm"> -->
+                        <source src="videos/emoji.mp4" type="video/mp4">
+                    </video>
+                    <div class="title-text-block">
+                        <h1 class="title"><span class="gradient-text">MV-TAP</span>: Tracking Any Point in Multi-View Videos</h1>
+                        <h1 class="subtitle">arXiv 2025</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="base-row author-row">
+                <div class="base-col author-col">
+                    <a href= "https://scholar.google.com/citations?user=1Vl37dcAAAAJ&hl=ko" target ="_blank" class="author-text">
+                        Jahyeok Koo<sup>*</sup>
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://sites.google.com/view/ines-hyeonsu-kim/home" target="_blank" class="author-text">
+                        Inès Hyeonsu Kim<sup>*</sup>
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://github.com/mungyeom011" target="_blank" class="author-text">
+                        Mungyeom Kim
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://junghyun-james-park.github.io/" target="_blank" class="author-text">
+                        Junghyun Park
+                    </a>
+                </div>
+            </div>
+            <div class="base-row author-row">
+                <div class="base-col author-col">
+                    <a href="https://eainx.github.io/" target="_blank" class="author-text">
+                        Seohyeon Park
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://github.com/kjae0" target="_blank" class="author-text">
+                        Jaeyeong Kim
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://yj-142150.github.io/jungyi/" target="_blank" class="author-text">
+                        Jung Yi
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://sites.google.com/view/seokjucho/home" target="_blank" class="author-text">
+                        Seokju Cho
+                    </a>
+                </div>
+                <div class="base-col author-col">
+                    <a href="https://cvlab.kaist.ac.kr/" target="_blank" class="author-text">
+                        Seungryong Kim
+                    </a>
+                </div>
+            </div>
+
+            <div class="base-row author-row">
+                <div class="base-col author-col affiliations">
+                    KAIST AI
+                    <br>
+                    <sup>*</sup>Equal Contribution
+                </div>
+            </div>
+            <div class="link-labels base-row">
+                <div class="base-col icon-col"><a href="https://arxiv.org/abs/2512.02006" target="_blank" class="link-block">
+                        <i class="fa fas fa-file-text main-icon" style="font-size: 60px"></i>
+                        <strong class="link-labels-text">Paper</strong>
+                    </a></div>
+                <div class="base-col icon-col"><a href="https://github.com/cvlab-kaist/MV-TAP" class="link-block">
+                        <i class="fa fa-github main-icon" style="font-size: 60px"></i>
+                        <strong class="link-labels-text">Code</strong>
+                    </a></div>
+                <div class="base-col icon-col"><a href="#citation" class="link-block">
+                        <i class="fa fa-graduation-cap main-icon" style="font-size: 60px"></i>
+                        <strong class="link-labels-text">Citation</strong>
+                    </a></div>
+            </div>
+
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="tldr">
+                <b>TL;DR</b>: <Strong>MV-TAP</Strong> is a robust multi-view point tracker that uses camera geometry and cross-view attention to achieve reliable trajectory estimation in dynamic scenes.
+            </div>
+
+            <div id="abstract" class="base-row section">
+                <h2>Introducing MV-TAP</h2>
+                <p class="paragraph">
+                    <Strong>MV-TAP</Strong> (<Strong>T</Strong>racking <Strong>A</Strong>ny <Strong>P</Strong>oint in <Strong>M</Strong>ulti-view <Strong>V</Strong>ideos) is a robust point tracker that tracks points across multi-view videos of dynamic scenes by leveraging cross-view information. 
+                    MV-TAP utilizes a cross-view attention mechanism to aggregate spatio-temporal information across views, enabling more complete and reliable trajectory estimation in multi-view videos.
+                </p>
+            </div>
+
+            <div class="image-container">
+                    <div class="image-content">
+                        <video class="vid large-image" autoplay loop muted playsinline>
+                            <source src="videos/teaser.mp4" type="video/mp4">
+                        </video>
+                        <!-- <img src="images/teaser.png" class="img large-image" alt="MV-TAP teaser"> -->
+                    </div>
+                    <!-- <p class="image-caption"> <strong>MV-TAP</strong> is a robust multi-view point tracker that uses camera geometry and cross-view attention to achieve reliable trajectory estimation in dynamic scenes.</p> -->
+
+                    <!-- <p class="image-caption">We propose <strong>VIsual Representation ALignment (VIRAL)</strong> for multi-modal large language models (MLLMs), which introduces an auxiliary regularization objective on visual features to prevent MLLMs from discarding fine-grained visual attributes during training. VIRAL consistently produces more accurate visually grounded responses and yields substantial improvements over standard visual instruction tuning baselines when employing diverse vision towers, including CLIP and SigLIPv2.</p> -->
+            </div>
+            <!-- <div>
+                <p>
+                    <img class="paragraph-image" src="images/virabot_head.png" alt="VIRAL robot" />
+                    VIRAL introduces an auxiliary regularization objective on the visual pathway to prevent MLLMs from discarding detailed attributes during training. 
+                </p>
+                <p>
+                    <img class="paragraph-image" src="images/virabot_head.png" alt="VIRAL robot" />
+                    VIRAL, when trained with DINOv2 as the vision foundation model (VFM), consistently produces more accurate visually grounded responses and achieves substantial improvements over standard baselines across diverse vision encoders, including CLIP and SigLIPv2!
+                </p>
+            </div> -->
+
+            
+
+            <section id="motivation" class="section">
+                <h2>Motivation</h2>
+
+                <p>
+                    <img class="paragraph-image" src="images/MV-TAP-bot_head-3.png" alt="MV-TAP robot" />
+                    <strong>Why should we consider using multi-view information when strong 2D point trackers already exist?</strong> <br>
+                    Despite its strong capability, existing point tracking methods have only been explored in single-view videos. 
+                    Since the 2D projection of a 3D scene inherently incurs geometric ambiguities, such as frequent occlusion, erratic motion, and depth uncertainty, single-view point tracking methods struggle with these challenges.
+                    Consequently, a direct application of these trackers independently to each viewpoint fails to leverage the multi-view cues required to construct reliable point trajectories.
+                </p>
+                <p>
+                    <img class="paragraph-image" src="images/MV-TAP-bot_head-3.png" alt="MV-TAP robot" />
+                    <strong>How is this different from existing multi-view tasks?</strong> <br>
+                    Most existing multi-view methods are designed for static scenes, assume rigid geometry, or require geometric priors that are unavailable in casual, in-the-wild videos. 
+                    Although a prior approach targets multi-view 3D point tracking in the 3D world coordinate system, it relies on external depth inputs that introduce reprojection errors when reprojecting 3D points to the 2D pixel space.
+                    To address these challenges, we present MV-TAP, a framework that builds a holistic understanding of dynamic multi-view scenes by aggregating information across views and timesteps through camera encoding and cross-view attention.
+                </p>
+                <p>
+                    <img class="paragraph-image" src="images/MV-TAP-bot_head-3.png" alt="MV-TAP robot" />
+                    <strong>How does the attention in MV-TAP fundamentally differ from the attention mechanism used in Single-view point tracking and Multi-view matching?</strong> <br>
+                    <div class="two-col">
+                        <div class="col-left">
+                            <p>MV-TAP introduces a novel joint attention mechanism that models both temporal and cross-view interactions simultaneously, unlike existing methods.
+                                This attention module allows the model to exchange information between different viewpoints, thereby overcoming view-dependent ambiguities. 
+                                Single-view point tracking primarily uses attention for <span style="color: #FF9999;">temporal consistency</span>, ignoring cross-view cues, and
+                                Multi-view matching focuses only on <span style="color: #66cc66;">cross-view consistency</span>, failing to maintain temporal coherence over time.
+                                MV-TAP effectively combines both temporal and cross-view alignment, ensuring the tracked point is consistent across time and space simultaneously.
+                            </p>
+                        </div>
+                        <div class="col-right img">
+                            <div class="image-container">
+                                <img src="images/comparison.png" class="image-item img large-image z-depth-1" alt="Conceptual comparison">
+                            </div>
+                        </div>
+                    </div>
+                </p>
+                <p></p>
+                <p>
+                    <img class="paragraph-image" src="images/MV-TAP-bot_head-3.png" alt="MV-TAP robot" />
+                    <strong>What is the core goal of the model?</strong> <br>
+                    Motivated by above, we introduce multi-view point tracking in 2D camera space.
+                    Our goal is to leverage multi-view information to enhance tracking performance while maintaining the strong spatio-temporal consistency established by 2D trackers.
+                </p>
+
+
+
+                <!-- <h3>Why should we consider using multi-view information when strong 2D point trackers already exist?</h3>
+                <p>Despite its strong capability, existing point tracking methods have only been explored in single-view videos. 
+                    Since the 2D projection of a 3D scene inherently incurs geometric ambiguities, such as frequent occlusion, erratic motion, and depth uncertainty, single-view point tracking methods struggle with these challenges.
+                    Consequently, a direct application of these trackers independently to each viewpoint fails to leverage the multi-view cues required to construct reliable point trajectories.
+                </p>
+
+                <h3>How is this different from existing multi-view tasks?</h3>
+                <p>Most existing multi-view methods are designed for static scenes, assume rigid geometry, or require geometric priors that are unavailable in casual, in-the-wild videos. 
+                    Although a prior approach targets multi-view 3D point tracking in the 3D world coordinate system, it relies on external depth inputs that introduce reprojection errors when reprojecting 3D points to the 2D pixel space.
+                    To address these challenges, we present MV-TAP, a framework that builds a holistic understanding of dynamic multi-view scenes by aggregating information across views and timesteps through camera encoding and cross-view attention.
+                </p>
+
+                <h3>How does the attention in MV-TAP fundamentally differ from the attention mechanism used in Single-view point tracking and Multi-view matching?</h3>
+                <div class="two-col">
+                    <div class="col-left">
+                        <p>MV-TAP introduces a novel joint attention mechanism that models both temporal and cross-view interactions simultaneously, unlike existing methods.
+                            This attention module allows the model to exchange information between different viewpoints, thereby overcoming view-dependent ambiguities. 
+                            Single-view point tracking primarily uses attention for <span style="color: #FF9999;">temporal consistency</span>, ignoring cross-view cues, and
+                            Multi-view matching focuses only on <span style="color: #66cc66;">cross-view consistency</span>, failing to maintain temporal coherence over time.
+                            MV-TAP effectively combines both temporal and cross-view alignment, ensuring the tracked point is consistent across time and space simultaneously.
+                        </p>
+                    </div>
+                    <div class="col-right img">
+                        <div class="image-container">
+                            <img src="images/comparison.png" class="image-item img large-image z-depth-1" alt="Conceptual comparison">
+                        </div>
+                    </div>
+                </div>
+
+                <p></p>
+
+                <h3>What is the core goal of the model?</h3>
+                <p>Motivated by above, we introduce multi-view point tracking in 2D camera space.
+                    Our goal is to leverage multi-view information to enhance tracking performance while maintaining the strong spatio-temporal consistency established by 2D trackers.
+                </p> -->
+
+                <!-- <h3>Can we compensate visual information with raw vision encoder feature?</h3>
+                <p>We first tested re-injecting raw vision encoder features into mid-layers via a residual branch, but this degraded performance as the features were not language-aligned and disrupted intermediate representations. 
+                To address this, we introduce a more principled strategy by explicitly aligning intermediate visual representations with frozen encoder features through a Visual Representation Alignment (VRA) loss. </p>
+                
+                <p>This approach yields general improvements, though limitations remain: <strong> <i>encoder features can also transmit their inherent biases</i></strong>, as observed in MMVP.</p> -->
+                <!-- <div class="image-container">
+                    <div class="image-content">
+                        <img src="images/motivations_results.png" class="img large-image" alt="Results chart">
+                    </div>
+                    <p class="image-caption">(d): Layer-wise alignment between visual tokens in MLLMs and vision encoder features measured by CKNNA, with shaded regions denoting middle layers that are especially important for visual understanding. (e): Benchmark performance corresponding to (a-c) </p>
+                </div> -->
+            </section>
+            
+
+            <section id="method" class="section">
+                <h2>Method</h2>
+                <div class="image-container">
+                    <div class="image-content">
+                        <img src="images/arch.png" class="img large-image" alt="Architecture">
+                    </div>
+                    <!-- <p class="image-caption"> <strong>❗️WILL BE CONVERTED INTO VIDEO (MAYBE NOT)❗️</strong> </p> -->
+                </div>
+                <p>
+                    Our approach integrates a strong 2D tracking backbone with additional modules designed to leverage multi-view information. 
+                    Specifically, we introduce a camera encoding module to inject geometric information and a cross view-attention module to aggregate complementary cues across viewpoints. This combination allows our model to achieve robust spatio-temporal consistency across multiple views.
+                </p>
+            </section>
+
+
+            <section id="qual-results" class="section">
+                <h2>Qualitative Results</h2>
+
+                <p></p>
+
+                <!-- <div class="three-col">
+                    <div class="col-1">
+                        <h3>on DexYCB dataset</h3>
+                        <div class="slideshow-container slideshow">
+                            <div class="slideshow">
+                                <div class="slide">
+                                    <video src="videos/dexycb-010.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (1)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-430.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (2)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-107.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (3)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-300.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (4)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-316.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (5)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-560.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (6)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-743.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (7)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/dexycb-804.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (8)"></video>
+                                </div>
+                            </div>
+
+                            <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                            <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                            
+                            <div class="slideshow-controls">
+                                <button class="play-pause" onclick="togglePlayPause()">
+                                    <i class="fa fa-pause"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <h3>on Panoptic Studio dataset</h3>
+                        <div class="slideshow-container slideshow">
+                            <div class="slideshow">
+                                <div class="slide">
+                                    <video src="videos/panoptic-juggle0.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (1)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/panoptic-basketball0.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (2)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/panoptic-basketball0-2.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (3)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/panoptic-boxes3-3.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (4)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/panoptic-juggle2-0.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (5)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/panoptic-football3-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (6)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/panoptic-football2-3.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (7)"></video>
+                                </div>
+                            </div>
+
+                            <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                            <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                            
+                            <div class="slideshow-controls">
+                                <button class="play-pause" onclick="togglePlayPause()">
+                                    <i class="fa fa-pause"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h3>on Harmony4D dataset</h3>
+                        <div class="slideshow-container slideshow">
+                            <div class="slideshow">
+                                <div class="slide">
+                                    <video src="videos/harmony4d-001_mma3-7.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (1)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/harmony4d-010_sword-7.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (2)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/harmony4d-001_grappling-2-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (3)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/harmony4d-001_mma4-1-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (4)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/harmony4d-001_sword2-1-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (5)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/harmony4d-001_karate3-1-2.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (6)"></video>
+                                </div>
+                                <div class="slide">
+                                    <video src="videos/harmony4d-001_karate2-0-2.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Harmony4D (7)"></video>
+                                </div>
+                            </div>
+
+                            <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                            <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                            
+                            <div class="slideshow-controls">
+                                <button class="play-pause" onclick="togglePlayPause()">
+                                    <i class="fa fa-pause"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <h3>Multi-view results on DexYCB dataset</h3>
+                <div class="slideshow-container slideshow">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <video src="videos/dexycb-43.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (1)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/dexycb-01.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (2)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/dexycb-10.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (3)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/dexycb-30.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (4)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/dexycb-56.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (5)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/dexycb-74.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (6)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/dexycb-80.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from DexYCB (7)"></video>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="slideshow-container">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-437.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-430.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-433.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-436.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-017.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-014.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-015.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-010.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-100.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-107.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-103.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-104.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-300.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-307.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-303.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-305.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-560.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-564.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-563.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-566.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-741.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-744.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-746.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-743.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-804.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-807.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-806.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/dexycb-801.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div> -->
+
+                <h3>Multi-view results on Panoptic Studio dataset</h3>
+                <div class="slideshow-container slideshow">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <video src="videos/panoptic-basketball0.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (1)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/panoptic-boxes3.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (2)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/panoptic-juggle2.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (3)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/panoptic-football3.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (4)"></video>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="slideshow-container">
+                    <div class="slideshow">
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-basketball0-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-basketball0-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-basketball0-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-basketball0-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-boxes3-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-boxes3-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-boxes3-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-boxes3-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-juggle2-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-juggle2-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-juggle2-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-juggle2-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-football3-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-football3-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-football3-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/panoptic-football3-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div> -->
+
+                <h3>Multi-view results on Harmony4D dataset</h3>
+                <div class="slideshow-container slideshow">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <video src="videos/harmony4d-001_mma3-0.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (1)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/harmony4d-001_grappling-2.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (2)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/harmony4d-001_karate3-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (3)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/harmony4d-001_mma4-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (4)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/harmony4d-001_sword2-1.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (5)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/harmony4d-001_karate2-0.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (6)"></video>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="slideshow-container">
+                    <div class="slideshow">
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma3-0-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma3-0-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma3-0-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma3-0-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_grappling-2-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_grappling-2-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_grappling-2-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_grappling-2-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate3-1-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate3-1-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate3-1-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate3-1-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma4-1-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma4-1-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma4-1-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_mma4-1-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_sword2-1-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_sword2-1-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_sword2-1-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_sword2-1-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">view 1</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate2-0-0.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 2</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate2-0-1.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 3</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate2-0-2.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">view 4</h4>
+                                    <video class="slideshow-video" src="videos/harmony4d-001_karate2-0-3.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div> -->
+
+                <h3>Comparison on DexYCB dataset</h3>
+                <div class="slideshow-container slideshow">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <video src="videos/com-dexycb-971.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (1)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/com-dexycb-507.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (2)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/com-dexycb-205.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (3)"></video>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="slideshow-container">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">GT</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-971-gt.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">CoTracker3</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-971-cot.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">Ours</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-971-ours.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">GT</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-507-gt.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">CoTracker3</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-507-cot.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">Ours</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-507-ours.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">GT</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-205-gt.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">CoTracker3</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-205-cot.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">Ours</h4>
+                                    <video class="slideshow-video" src="videos/com-dexycb-205-ours.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div> -->
+
+                <h3>Comparison on Panoptic Studio dataset</h3>    
+                <div class="slideshow-container slideshow">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <video src="videos/com-panoptic-softball0_extended.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (1)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/com-panoptic-tennis2_extended.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (2)"></video>
+                        </div>
+                        <div class="slide">
+                            <video src="videos/com-panoptic-tennis5_extended.mp4" class="slideshow-image-video" autoplay muted loop alt="Qualitative video from Panoptic Studio (3)"></video>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="slideshow-container">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">GT</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-softball0-gt_extended.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">CoTracker3</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-softball0-cot_extended.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">Ours</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-softball0-ours_extended.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">GT</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-tennis2-gt_extended.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">CoTracker3</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-tennis2-cot_extended.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">Ours</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-tennis2-ours_extended.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slide">
+                            <div class="video-slide active-slide">
+                                <div class="slide-video-wrapper">
+                                    <div class="video-item-container"><h4 class="video-title">GT</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-tennis5-gt_extended.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">CoTracker3</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-tennis5-cot_extended.mp4" autoplay loop muted playsinline></video></div>
+                                    <div class="video-item-container"><h4 class="video-title">Ours</h4>
+                                    <video class="slideshow-video" src="videos/com-panoptic-tennis5-ours_extended.mp4" autoplay loop muted playsinline></video></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div> -->
+            </section>
+            
+            
+            <section id="quant-results" class="section">
+                <h2>Quantitative Results</h2>
+                
+                <h3>Consistently strong across diverse multi-view point tracking scenarios</h3>
+                <p>
+                    <!-- Our method consistently boosts MLLM performance on vision-centric tasks by aligning intermediate visual features with a strong vision encoder. Gains persist even with SigLIPv2, showing that regularizing visual representations benefits MLLMs beyond compensating for contrastive pretraining limits. -->
+                    We compare our approaches with recent state-of-the art point trackers on DexYCB, Panoptic Studio, Kubric and Harmony4D dataset.
+                    Compared to baselines, MV-TAP achieves superior performance, demonstrating its ability to leverage multi-view information.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th class="left-bold-border-col" rowspan="2">Target</th>
+                                <th class="model-col" rowspan="2">Space</th>
+                                <th class="depth-col" rowspan="2">Depth</th>
+                                <th colspan="3" class="left-bold-border-col">DexYCB</th>
+                                <th colspan="3" class="left-bold-border-col">Panoptic Studio</th>
+                                <th colspan="3" class="left-bold-border-col">Harmony4D</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta_{avg}^x$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta_{avg}^x$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta_{avg}^x$</th>
+                                <th>OA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="16" class="category-row" style="color: gray; font-style: italic;">Single-view input</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">TAPIR</td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col">29.6</td>
+                                <td>43.9</td>
+                                <td>66.4</td>
+                                <td class="left-border-col">22.1</td>
+                                <td>39.3</td>
+                                <td>60.0</td>
+                                <td class="left-border-col">27.6</td>
+                                <td>53.1</td>
+                                <td>60.0</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker2</td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col">37.5</td>
+                                <td><strong>62.5</strong></td>
+                                <td>69.4</td>
+                                <td class="left-border-col">33.3</td>
+                                <td>59.1</td>
+                                <td>64.4</td>
+                                <td class="left-border-col">37.2</td>
+                                <td>71.9</td>
+                                <td>55.7</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">LocoTrack</td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col">38.7</td>
+                                <td>55.8</td>
+                                <td>74.1</td>
+                                <td class="left-border-col">34.9</td>
+                                <td>56.1</td>
+                                <td>67.5</td>
+                                <td class="left-border-col">40.8</td>
+                                <td>72.0</td>
+                                <td><u>64.1</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col"><u>41.5</u></td>
+                                <td>59.6</td>
+                                <td><u>76.4</u></td>
+                                <td class="left-border-col"><u>39.6</u></td>
+                                <td>61.4</td>
+                                <td><u>72.3</u></td>
+                                <td class="left-border-col"><u>41.4</u></td>
+                                <td><u>73.5</u></td>
+                                <td>63.2</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">SpatialTracker</td>
+                                <td class="left-border-col">3D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-check depth-yes" aria-label="depth on"></i></td>
+                                <td class="left-border-col">23.2</td>
+                                <td>43.3</td>
+                                <td>61.8</td>
+                                <td class="left-border-col">19.7</td>
+                                <td>40.5</td>
+                                <td>59.6</td>
+                                <td class="left-border-col">25.4</td>
+                                <td>54.4</td>
+                                <td>58.1</td>
+                            </tr>
+                            <tr>
+                                <td colspan="16" class="category-row" style="color: gray; font-style: italic;">Multi-view input</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Flat.</td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col">2.7</td>
+                                <td>7.1</td>
+                                <td>35.7</td>
+                                <td class="left-border-col">1.0</td>
+                                <td>12.7</td>
+                                <td>38.8</td>
+                                <td class="left-border-col">2.1</td>
+                                <td>20.7</td>
+                                <td>46.4</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Tri.</td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col">39.2</td>
+                                <td>57.1</td>
+                                <td><u>76.4</u></td>
+                                <td class="left-border-col">37.9</td>
+                                <td>59.5</td>
+                                <td><u>72.3</u></td>
+                                <td class="left-border-col">39.2</td>
+                                <td>70.4</td>
+                                <td>63.2</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">MVTracker</td>
+                                <td class="left-border-col">3D</td>
+                                <td class="model-col">World</td>
+                                <td class="depth-col"><i class="fa fa-check depth-yes" aria-label="depth on"></i></td>
+                                <td class="left-border-col">-</td>
+                                <td>32.6</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td><u>62.4</u></td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>13.3</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col">2D</td>
+                                <td class="model-col">Camera</td>
+                                <td class="depth-col"><i class="fa fa-times depth-no" aria-label="depth off"></i></td>
+                                <td class="left-border-col"><strong>44.2</strong></td>
+                                <td><u>61.9</u></td>
+                                <td><strong>78.3</strong></td>
+                                <td class="left-border-col"><strong>40.3</strong></td>
+                                <td><strong>62.8</strong></td>
+                                <td><strong>73.1</strong></td>
+                                <td class="left-border-col"><strong>42.6</strong></td>
+                                <td><strong>74.9</strong></td>
+                                <td><strong>65.8</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="image-caption">
+                        'Target' denotes the dimension of the predicted trajectory. 
+                        'Space' specifies the coordinate domain: 'Camera' and 'World' denotes pixel and world space, respectively. 
+                        'Depth' indicates whether depth input is required. 
+                    </p>
+                </div>
+            </section>
+
+
+            <section id="ablation-studies" class="section">
+                <h2>Ablation studies</h2>
+
+                <h3>Ablation on various number of views</h3>
+                <p>
+                    We compare MV-TAP with baselines using a varying number of input views. While performance generally improves with more views, the baselines exhibit only marginal gains. In contrast, MV-TAP demonstrates a significantly larger improvement consistently, highlighting its superior ability to leverage multi-view information.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th colspan="3" class="left-bold-border-col">2 views</th>
+                                <th colspan="3" class="left-bold-border-col">4 views</th>
+                                <th colspan="3" class="left-bold-border-col">6 views</th>
+                                <th colspan="3" class="left-bold-border-col">8 views</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col"><u>37.5</u></td>
+                                <td><u>56.4</u></td>
+                                <td><strong>77.8</strong></td>
+                                <td class="left-border-col"><u>38.9</u></td>
+                                <td><u>56.6</u></td>
+                                <td><u>75.1</u></td>
+                                <td class="left-border-col"><u>41.0</u></td>
+                                <td><u>58.9</u></td>
+                                <td><u>75.8</u></td>
+                                <td class="left-border-col"><u>41.5</u></td>
+                                <td><u>59.6</u></td>
+                                <td><u>76.4</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Flat.</td>
+                                <td class="left-border-col">9.5</td>
+                                <td>19.5</td>
+                                <td>54.3</td>
+                                <td class="left-border-col">4.4</td>
+                                <td>8.4</td>
+                                <td>44.5</td>
+                                <td class="left-border-col">3.2</td>
+                                <td>8.3</td>
+                                <td>39.1</td>
+                                <td class="left-border-col">2.7</td>
+                                <td>7.1</td>
+                                <td>35.7</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Tri.</td>
+                                <td class="left-border-col">37.1</td>
+                                <td>55.6</td>
+                                <td><strong>77.8</strong></td>
+                                <td class="left-border-col">37.8</td>
+                                <td>55.3</td>
+                                <td><u>75.1</u></td>
+                                <td class="left-border-col">38.7</td>
+                                <td>56.4</td>
+                                <td><u>75.8</u></td>
+                                <td class="left-border-col">39.2</td>
+                                <td>57.1</td>
+                                <td><u>76.4</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">MVTracker</td>
+                                <td class="left-border-col">-</td>
+                                <td>35.8</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>31.8</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>32.8</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>32.6</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col"><strong>39.2</strong></td>
+                                <td><strong>56.8</strong></td>
+                                <td><u>76.8</u></td>
+                                <td class="left-border-col"><strong>40.3</strong></td>
+                                <td><strong>57.7</strong></td>
+                                <td><strong>75.2</strong></td>
+                                <td class="left-border-col"><strong>43.3</strong></td>
+                                <td><strong>60.7</strong></td>
+                                <td><strong>76.9</strong></td>
+                                <td class="left-border-col"><strong>44.2</strong></td>
+                                <td><strong>61.9</strong></td>
+                                <td><strong>78.3</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="image-caption">❗️CAPTION NEEDED❗️</p> -->
+                </div>
+
+                <h3>Can multi-view resolve occlusion ambiguity?</h3>
+                <p>
+                    We also evaluate the position accuracy on in-frame occluded points. Our model shows robustness on the occlusion, indicating that our model effectively utilizes the multi-view cues. $<\delta^{x}_{occ}$ denotes point accuracy on in-frame occlusion points.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th colspan="2" class="left-bold-border-col">DexYCB</th>
+                                <th colspan="2" class="left-bold-border-col">Panoptic Studio</th>
+                                <th colspan="2" class="left-bold-border-col">Harmony4D</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">&lt;$\delta^{x}_{avg}$</th>
+                                <th>&lt;$\delta^{x}_{occ}$</th>
+                                <th class="left-bold-border-col">&lt;$\delta^{x}_{avg}$</th>
+                                <th>&lt;$\delta^{x}_{occ}$</th>
+                                <th class="left-bold-border-col">&lt;$\delta^{x}_{avg}$</th>
+                                <th>&lt;$\delta^{x}_{occ}$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col"><u>59.6</u></td>
+                                <td>33.9</td>
+                                <td class="left-border-col">61.4</td>
+                                <td>46.2</td>
+                                <td class="left-border-col"><u>73.5</u></td>
+                                <td>58.4</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Flat.</td>
+                                <td class="left-border-col">7.1</td>
+                                <td>1.9</td>
+                                <td class="left-border-col">12.7</td>
+                                <td>6.3</td>
+                                <td class="left-border-col">20.7</td>
+                                <td>15.0</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Tri.</td>
+                                <td class="left-border-col">57.1</td>
+                                <td>34.8</td>
+                                <td class="left-border-col">59.5</td>
+                                <td>47.7</td>
+                                <td class="left-border-col">70.4</td>
+                                <td><u>59.1</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">MVTracker</td>
+                                <td class="left-border-col">32.6</td>
+                                <td>16.0</td>
+                                <td class="left-border-col"><u>62.4</u></td>
+                                <td><strong>61.2</strong></td>
+                                <td class="left-border-col">13.3</td>
+                                <td>8.9</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col"><strong>61.9</strong></td>
+                                <td><strong>38.4</strong></td>
+                                <td class="left-border-col"><strong>62.8</strong></td>
+                                <td><u>48.7</u></td>
+                                <td class="left-border-col"><strong>74.9</strong></td>
+                                <td><strong>60.3</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="image-caption">❗️CAPTION NEEDED❗️</p> -->
+                </div>
+
+                <h3>Effect of additional training</h3>
+                <p>
+                    Although initialized from the same pretrained model, MV-TAP attains consistently higher performance across all metrics. This shows that its gains primarily come from the architectural design, not merely extended training.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th colspan="3" class="left-bold-border-col">DexYCB</th>
+                                <th colspan="3" class="left-bold-border-col">Panoptic Studio</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col"><u>41.8</u></td>
+                                <td><u>59.0</u></td>
+                                <td><u>73.8</u></td>
+                                <td class="left-border-col"><u>39.6</u></td>
+                                <td><u>61.6</u></td>
+                                <td><u>71.8</u></td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col"><strong>44.2</strong></td>
+                                <td><strong>61.9</strong></td>
+                                <td><strong>78.3</strong></td>
+                                <td class="left-border-col"><strong>40.3</strong></td>
+                                <td><strong>62.8</strong></td>
+                                <td><strong>73.1</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="image-caption">❗️CAPTION NEEDED❗️</p> -->
+                </div>
+
+                <h3>Comparison on various number of points</h3>
+                <p>
+                    We measure tracking performances under varying numbers of query points. Our model consistently outperforms shows better robustness compared to the baselines across both sparse and dense settings.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th colspan="3" class="left-bold-border-col">50 Points</th>
+                                <th colspan="3" class="left-bold-border-col">100 Points</th>
+                                <th colspan="3" class="left-bold-border-col">300 Points</th>
+                                <th colspan="3" class="left-bold-border-col">500 Points</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col"><u>42.0</u></td>
+                                <td><u>59.9</u></td>
+                                <td><u>74.6</u></td>
+                                <td class="left-border-col"><u>41.9</u></td>
+                                <td><u>60.1</u></td>
+                                <td><u>77.2</u></td>
+                                <td class="left-border-col"><u>41.5</u></td>
+                                <td><u>59.6</u></td>
+                                <td><u>76.4</u></td>
+                                <td class="left-border-col"><u>41.5</u></td>
+                                <td><u>59.8</u></td>
+                                <td><u>76.7</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Flat.</td>
+                                <td class="left-border-col">2.7</td>
+                                <td>7.4</td>
+                                <td>34.4</td>
+                                <td class="left-border-col">2.5</td>
+                                <td>6.8</td>
+                                <td>35.6</td>
+                                <td class="left-border-col">2.7</td>
+                                <td>7.1</td>
+                                <td>35.7</td>
+                                <td class="left-border-col">2.6</td>
+                                <td>7.0</td>
+                                <td>35.7</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Tri.</td>
+                                <td class="left-border-col">39.4</td>
+                                <td>53.4</td>
+                                <td><u>74.6</u></td>
+                                <td class="left-border-col">39.4</td>
+                                <td>57.1</td>
+                                <td><u>77.2</u></td>
+                                <td class="left-border-col">39.2</td>
+                                <td>57.1</td>
+                                <td><u>76.4</u></td>
+                                <td class="left-border-col">39.5</td>
+                                <td>57.3</td>
+                                <td><u>76.7</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">MVTracker</td>
+                                <td class="left-border-col">-</td>
+                                <td>34.2</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>32.9</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>32.6</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>34.9</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col"><strong>44.3</strong></td>
+                                <td><strong>62.0</strong></td>
+                                <td><strong>77.5</strong></td>
+                                <td class="left-border-col"><strong>44.7</strong></td>
+                                <td><strong>62.5</strong></td>
+                                <td><strong>78.3</strong></td>
+                                <td class="left-border-col"><strong>44.2</strong></td>
+                                <td><strong>61.9</strong></td>
+                                <td><strong>78.3</strong></td>
+                                <td class="left-border-col"><strong>44.3</strong></td>
+                                <td><strong>62.1</strong></td>
+                                <td><strong>78.7</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="image-caption">❗️CAPTION NEEDED❗️</p> -->
+                </div>
+
+                <h3>Ablation on model architecture</h3>
+                <p>
+                    We present an ablation study on our model components for multi-view awareness. The performance consistently improves as each component is added, demonstrating that each module significantly contributes to leveraging multi-view information.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th colspan="3" class="left-bold-border-col">DexYCB</th>
+                                <th colspan="3" class="left-bold-border-col">Panoptic Studio</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta_{avg}^x$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta_{avg}^x$</th>
+                                <th>OA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col">41.5</td>
+                                <td>59.6</td>
+                                <td>76.4</td>
+                                <td class="left-border-col">39.6</td>
+                                <td>61.4</td>
+                                <td>72.3</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">+ View attn.</td>
+                                <td class="left-border-col"><u>43.6</u></td>
+                                <td><u>61.5</u></td>
+                                <td>77.4</td>
+                                <td class="left-border-col">38.6</td>
+                                <td><u>61.6</u></td>
+                                <td>69.4</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">+ Cam embed.</td>
+                                <td class="left-border-col">42.2</td>
+                                <td>60.6</td>
+                                <td><u>78.0</u></td>
+                                <td class="left-border-col"><u>39.9</u></td>
+                                <td>60.9</td>
+                                <td><u>73.0</u></td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col"><strong>44.2</strong></td>
+                                <td><strong>61.9</strong></td>
+                                <td><strong>78.3</strong></td>
+                                <td class="left-border-col"><strong>40.3</strong></td>
+                                <td><strong>62.8</strong></td>
+                                <td><strong>73.1</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="image-caption">❗️CAPTION NEEDED❗️</p> -->
+                </div>
+
+                <h3>Comparison under frequently occluded trajectories</h3>
+                <p>
+                    We evaluate methods on trajectories with high occlusion frequency measured by visibility-transition rate. MV-TAP leverages cross-view cues to remain robust on frequently occluded points, improving AJ, $\delta^{x}_{\text{avg}}$ and OA.
+                </p>
+                <div class="table-container">
+                    <table class="advantages-table">
+                        <thead>
+                            <tr>
+                                <th class="model-col" rowspan="2">Method</th>
+                                <th colspan="3" class="left-bold-border-col">DexYCB</th>
+                                <th colspan="3" class="left-bold-border-col">Panoptic Studio</th>
+                            </tr>
+                            <tr>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                                <th class="left-bold-border-col">AJ</th>
+                                <th>&lt;$\delta^{x}_{avg}$</th>
+                                <th>OA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="model-col">CoTracker3</td>
+                                <td class="left-border-col"><u>26.2</u></td>
+                                <td>43.4</td>
+                                <td><u>66.6</u></td>
+                                <td class="left-border-col"><u>37.4</u></td>
+                                <td><u>60.6</u></td>
+                                <td><u>69.0</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Flat.</td>
+                                <td class="left-border-col">0.5</td>
+                                <td>1.8</td>
+                                <td>41.2</td>
+                                <td class="left-border-col">0.8</td>
+                                <td>13.4</td>
+                                <td>40.6</td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">CoTracker3<br>w/ Tri.</td>
+                                <td class="left-border-col">26.0</td>
+                                <td><u>43.6</u></td>
+                                <td><u>66.6</u></td>
+                                <td class="left-border-col">36.6</td>
+                                <td>59.4</td>
+                                <td><u>69.0</u></td>
+                            </tr>
+                            <tr>
+                                <td class="model-col">MVTracker</td>
+                                <td class="left-border-col">-</td>
+                                <td>7.9</td>
+                                <td>-</td>
+                                <td class="left-border-col">-</td>
+                                <td>59.4</td>
+                                <td>-</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0;">
+                                <td class="model-col"><strong>MV-TAP (Ours)</strong></td>
+                                <td class="left-border-col"><strong>29.7</strong></td>
+                                <td><strong>47.3</strong></td>
+                                <td><strong>70.5</strong></td>
+                                <td class="left-border-col"><strong>38.0</strong></td>
+                                <td><strong>61.9</strong></td>
+                                <td><strong>69.9</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p class="image-caption">❗️CAPTION NEEDED❗️</p> -->
+                </div>
+            </section>
+
+            
+            <!-- <section id="analysis" class="section">
+                <h2>Analysis</h2>
+
+                <p></p>
+                
+                <div class="slideshow-container">
+                    <div class="slideshow">
+                        <div class="slide">
+                            <img src="images/viral_attention_anlaysis_final.png"
+                                class="comparison-slideshow-image" alt="Attention analysis">
+                            <div class="image-caption">Qualitative comparison on text-to-image attention maps (left) and quantified spatial entropy of attention across layers and heads (right). Applying visual representation alignment encourages model to attend to more contextually important content, yielding a more focused and structured attention pattern.</div>
+                        </div>
+                        
+                        <div class="slide">
+                            <img src="images/viral_training_efficiency_final.png"
+                                class="comparison-slideshow-image" alt="Training efficiency curves">
+                            <div class="image-caption">Performance with and without $\mathcal{L}_\mathrm{VRA}$ evaluated every 1K steps on (a) POPE, (b) CV-Bench$^\mathrm{2D}$ and (c) MMVP. Improved early-stage performance with $\mathcal{L}_\mathrm{VRA}$ indicates that VIRAL facilitates faster convergence.</div>
+                        </div>
+
+                        <div class="slide">
+                            <img src="images/token_permutation_final.png"
+                                class="comparison-slideshow-image" alt="Permutation robustness bar chart">
+                            <div class="image-caption">Number of correct predictions out of 788 spatial reasoning tasks in CV-Bench$^\mathrm{2D}$. Models with $\mathcal{L}_\mathrm{VRA}$ show larger performance drops under random permutation, indicating stronger sensitivity to spatial relationships.</div>
+                        </div>
+                        <div class="slide">
+                            <img src="images/vfm_pca.png"
+                                class="comparison-slideshow-image" alt="Permutation robustness bar chart">
+                            <div class="image-caption">PCA visualizations of 16-th layer visual representations aligned with different VFMs: CLIP, DINOv2, SAM, DAv2, and RADIO.</div>
+                        </div>
+                    </div>
+
+                    <button class="slideshow-nav prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slideshow-nav next" onclick="changeSlide(1)">❯</button>
+                    
+                    <div class="slideshow-controls">
+                        <button class="play-pause" onclick="togglePlayPause()">
+                            <i class="fa fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+            </section> -->
+            
+
+            <section id="conclusion" class="section">
+                <h2>Conclusion</h2>
+
+                <p>This work establishes multi-view 2D point tracking as a new and important task for advancing reliable spatio-temporal correspondence in dynamic, real-world scenes. By introducing MV-TAP, a model that aggregates cross-view information through camera embedding and view-attention, we demonstrate how leveraging multi-view inputs can overcome key limitations of monocular trackers such as occlusion and motion ambiguity. Together with a large-scale synthetic dataset and a real-world evaluation dataset specifically designed for this task, our contributions provide both a principled formulation of the problem and a strong baseline method, paving the way for future research in robust multi-view point tracking.</p>
+            </section>
+
+            <div class="citation add-top-padding">
+                <h1 id="citation">Citation</h1>
+                <p> If you use this work or find it helpful, please consider citing: </p>
+                <pre id="codecell0">
+    @article{koo2025mvtap,
+      title={MV-TAP: Tracking Any Point in Multi-View Videos},
+      author={Koo, Jahyeok and Kim, In{\`e}s Hyeonsu and Kim, Mungyeom and Park, Junghyun and Park, Seohyun and Kim, Jaeyeong and Yi, Jung and Cho, Seokju and Kim, Seungryong},
+      journal={arXiv preprint arXiv:2512.02006},
+      year={2025}
+    }
+                </pre>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p class="credit">Credit: The design of this project page is inspired by previous academic project pages, such as <a href="https://llm-grounded-diffusion.github.io/" target="_blank">LLM-grounded Diffusion</a>, <a href="https://describe-anything.github.io/" target="_blank">Describe-anything</a> and <a href="https://cvlab-kaist.github.io/VIRAL" target="_blank">VIRAL</a>.</p>
+        </div>
+    </footer>
+
+    <script>
+    function toggleMute(element) {
+        const video = element.parentElement.querySelector('video');
+        const icon = element.querySelector('i');
+        const text = element.querySelector('.unmute-text');
+        
+        if (video.muted) {
+            video.muted = false;
+            icon.className = 'fa fa-volume-up';
+            text.textContent = 'Mute';
+        } else {
+            video.muted = true;
+            icon.className = 'fa fa-volume-off';
+            text.textContent = 'Click to unmute';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.addEventListener('play', function() {
+                const overlay = this.parentElement.querySelector('.unmute-overlay');
+                if (overlay) overlay.style.opacity = '0.8';
+            });
+            
+            video.addEventListener('pause', function() {
+                const overlay = this.parentElement.querySelector('.unmute-overlay');
+                if (overlay) overlay.style.opacity = '0.8';
+            });
+        });
+        // --- Multi-view Video Sync Logic Start ---
+        const slideWrappers = document.querySelectorAll('.slide-video-wrapper');
+
+        slideWrappers.forEach(wrapper => {
+            const syncVideos = wrapper.querySelectorAll('video');
+            
+            if (syncVideos.length === 0) return;
+
+            // 첫 번째 비디오를 마스터로 설정
+            const masterVideo = syncVideos[0];
+
+            const playAll = async () => {
+                try {
+                    // 모든 비디오 시간을 0으로 초기화
+                    syncVideos.forEach(v => v.currentTime = 0);
+                    // 모든 비디오 재생 시도
+                    const playPromises = Array.from(syncVideos).map(v => v.play());
+                    await Promise.all(playPromises);
+                } catch (err) {
+                    // console.error("Autoplay failed:", err); // 필요시 주석 해제
+                }
+            };
+
+            // 마스터 비디오가 끝나면 다 같이 처음부터 다시 재생 (Loop 동기화)
+            masterVideo.addEventListener('ended', () => {
+                playAll(); 
+            });
+
+            // 메타데이터 로드 시 최초 1회 실행
+            masterVideo.addEventListener('loadedmetadata', () => {
+                 playAll();
+            });
+        });
+        // --- Multi-view Video Sync Logic End ---
+
+        // Initialize all slideshows
+        document.querySelectorAll('.slideshow-container').forEach(container => {
+            const slideshow = container.querySelector('.slideshow');
+            const slides = slideshow.querySelectorAll('.slide');
+            const prevButton = container.querySelector('.slideshow-nav.prev');
+            const nextButton = container.querySelector('.slideshow-nav.next');
+            const playPauseButton = container.querySelector('.play-pause');
+            
+            let currentSlide = 0;
+            let autoplayInterval;
+            let isPlaying = true;
+
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+
+            function changeSlide(n) {
+                showSlide(currentSlide + n);
+                resetAutoplay();
+            }
+
+            function togglePlayPause() {
+                if (isPlaying) {
+                    clearInterval(autoplayInterval);
+                    playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
+                } else {
+                    startAutoplay();
+                    playPauseButton.innerHTML = '<i class="fa fa-pause"></i>';
+                }
+                isPlaying = !isPlaying;
+            }
+
+            function startAutoplay() {
+                autoplayInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            }
+
+            function resetAutoplay() {
+                clearInterval(autoplayInterval);
+                if (isPlaying) {
+                    startAutoplay();
+                }
+            }
+
+            // Initialize this slideshow
+            showSlide(0);
+            startAutoplay();
+
+            // Add event listeners
+            prevButton.addEventListener('click', () => changeSlide(-1));
+            nextButton.addEventListener('click', () => changeSlide(1));
+            playPauseButton.addEventListener('click', togglePlayPause);
+        });
+
+        // Handle main video play button
+        const mainVideo = document.querySelector('.main-video');
+        const playButton = document.querySelector('.play-button-overlay');
+        
+        if (mainVideo && playButton) {
+            // Click play button to play video
+            playButton.addEventListener('click', () => {
+                mainVideo.play();
+                mainVideo.classList.add('playing');
+            });
+
+            // Handle video play/pause events
+            mainVideo.addEventListener('play', () => {
+                mainVideo.classList.add('playing');
+            });
+
+            mainVideo.addEventListener('pause', () => {
+                mainVideo.classList.remove('playing');
+            });
+
+            mainVideo.addEventListener('ended', () => {
+                mainVideo.classList.remove('playing');
+            });
+        }
+
+        // -----------------------------
+        // 🖼️ Click-to-zoom Lightbox
+        // -----------------------------
+        // Build overlay once
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox-overlay';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+        lightbox.innerHTML = '<img alt="Expanded image">';
+        document.body.appendChild(lightbox);
+        const lightboxImg = lightbox.querySelector('img');
+
+        function openLightbox(src, alt) {
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            lightbox.classList.add('active');
+            document.body.classList.add('no-scroll');
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+            lightboxImg.src = '';
+        }
+
+        // Close on click anywhere or on Esc
+        lightbox.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+        });
+
+        // Mark target images as zoomable and wire up click
+        const zoomableImages = document.querySelectorAll('.image-container img, .slideshow img, .main-content img.img, .hero-section img.img');
+        zoomableImages.forEach(img => {
+            img.classList.add('zoomable');
+            img.addEventListener('click', () => {
+                // support optional high-res source via data-fullsrc
+                const src = img.getAttribute('data-fullsrc') || img.currentSrc || img.src;
+                openLightbox(src, img.alt);
+            });
+        });
+    });
+    </script>
+</body>
+</html>
