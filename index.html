@@ -164,31 +164,33 @@
             <div id="abstract" class="base-row section">
                 <h2>Introducing UniT</h2>
                 <p class="paragraph">
-                    We present <Strong>UniT</Strong> (<Strong>U</Strong>nified Diffusion <Strong>T</Strong>ransformer), a unified text-aware image restoration framework that combines a Diffusion Transformer (DiT), a Vision–Language Model (VLM), and a Text Spotting Module (TSM) to perform high-fidelity text-aware image restoration. In UniT, each component is responsible for a distinct role: the VLM extracts textual content from degraded images to provide initial textual guidance, the TSM generates intermediate OCR predictions at each denoising timestep to enable the VLM to iteratively correct potential textual errors, and the DiT-based restoration module leverages its representational power to recover fine-grained text details while suppressing text hallucinations.
+                    We present <Strong>UniT</Strong> (<Strong>U</Strong>nified Diffusion <Strong>T</Strong>ransformer), a unified text-aware image restoration framework that combines a Diffusion Transformer (DiT), a Vision–Language Model (VLM), and a Text Spotting Module (TSM) to perform high-fidelity text-aware image restoration. In UniT, each component serves a distinct role. The VLM extracts textual content from degraded images to provide initial textual guidance. The TSM generates intermediate OCR predictions at each denoising timestep, allowing the VLM to iteratively correct potential textual errors. The DiT-based restoration module, with its strong representational capacity, fully leverages the textual guidance to achieve fine-grained text restoration while suppressing text hallucinations.
                 </p>
             </div>
-
             <!-- <div class="image-container">
                 <div class="image-content">
                     <img class="large-image" src="images/unit_teaser.png" alt="unit_teaser_img">
                 </div>
             </div> -->
+            <div class="image-container">
+                <div class="image-content">
+                    <img class="large-image" src="images/fig_unit_teaser copy 15.png" alt="unit_teaser_img">
+                </div>
+            </div>
 
-    
 
-            <section id="method" class="section">
+            <!-- <section id="method" class="section">
                 <h2>Method</h2>
                 <div class="image-container">
                     <div class="image-content">
-                        <img class="large-image" src="images/unit_teaser.png" alt="unit_teaser_img">
+                        <img class="medium-image" src="images/fig_unit_teaser copy 15.png" alt="unit_teaser_img">
                     </div>
                 </div>
                 <p>
                     Our approach integrates a strong 2D tracking backbone with additional modules designed to leverage multi-view information. 
                     Specifically, we introduce a camera encoding module to inject geometric information and a cross view-attention module to aggregate complementary cues across viewpoints. This combination allows our model to achieve robust spatio-temporal consistency across multiple views.
                 </p>
-            </section>
-
+            </section> -->
 
 
             <section id="qual-results" class="section">
@@ -289,7 +291,7 @@
             <section id="quant-results" class="section">
                 <h2>Quantitative Results</h2>
                 
-                <h3>Consistently strong across diverse multi-view point tracking scenarios</h3>
+                <h3>SOTA End-to-End F1-Score Performance in TAIR</h3>
                 <p>
                     <!-- Our method consistently boosts MLLM performance on vision-centric tasks by aligning intermediate visual features with a strong vision encoder. Gains persist even with SigLIPv2, showing that regularizing visual representations benefits MLLMs beyond compensating for contrastive pretraining limits. -->
                     We compare our approaches with recent state-of-the art point trackers on DexYCB, Panoptic Studio, Kubric and Harmony4D dataset.
