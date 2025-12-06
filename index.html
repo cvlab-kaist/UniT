@@ -352,194 +352,35 @@
         </div>
     </footer>
 
-    <script>
-    function toggleMute(element) {
-        const video = element.parentElement.querySelector('video');
-        const icon = element.querySelector('i');
-        const text = element.querySelector('.unmute-text');
-        
-        if (video.muted) {
-            video.muted = false;
-            icon.className = 'fa fa-volume-up';
-            text.textContent = 'Mute';
-        } else {
-            video.muted = true;
-            icon.className = 'fa fa-volume-off';
-            text.textContent = 'Click to unmute';
-        }
-    }
     
-    document.addEventListener('DOMContentLoaded', function() {
-        const videos = document.querySelectorAll('video');
-        videos.forEach(video => {
-            video.addEventListener('play', function() {
-                const overlay = this.parentElement.querySelector('.unmute-overlay');
-                if (overlay) overlay.style.opacity = '0.8';
-            });
-            
-            video.addEventListener('pause', function() {
-                const overlay = this.parentElement.querySelector('.unmute-overlay');
-                if (overlay) overlay.style.opacity = '0.8';
-            });
-        });
-        // --- Multi-view Video Sync Logic Start ---
-        const slideWrappers = document.querySelectorAll('.slide-video-wrapper');
+    <script>
+        // add your functions here
+        function changeSlide(button, direction) { … }
 
-        slideWrappers.forEach(wrapper => {
-            const syncVideos = wrapper.querySelectorAll('video');
-            
-            if (syncVideos.length === 0) return;
+        function toggleMute(element) { … }
 
-            // 첫 번째 비디오를 마스터로 설정
-            const masterVideo = syncVideos[0];
+        // lightbox zoom code
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.createElement("div");
+            overlay.className = "lightbox-overlay";
+            overlay.innerHTML = "<img>";
+            document.body.appendChild(overlay);
 
-            const playAll = async () => {
-                try {
-                    // 모든 비디오 시간을 0으로 초기화
-                    syncVideos.forEach(v => v.currentTime = 0);
-                    // 모든 비디오 재생 시도
-                    const playPromises = Array.from(syncVideos).map(v => v.play());
-                    await Promise.all(playPromises);
-                } catch (err) {
-                    // console.error("Autoplay failed:", err); // 필요시 주석 해제
-                }
-            };
-
-            // 마스터 비디오가 끝나면 다 같이 처음부터 다시 재생 (Loop 동기화)
-            masterVideo.addEventListener('ended', () => {
-                playAll(); 
+            document.querySelectorAll("img.zoomable").forEach(img => {
+                img.addEventListener("click", () => {
+                    overlay.querySelector("img").src = img.src;
+                    overlay.classList.add("active");
+                    document.body.classList.add("no-scroll");
+                });
             });
 
-            // 메타데이터 로드 시 최초 1회 실행
-            masterVideo.addEventListener('loadedmetadata', () => {
-                 playAll();
+            overlay.addEventListener("click", () => {
+                overlay.classList.remove("active");
+                document.body.classList.remove("no-scroll");
             });
         });
-        // --- Multi-view Video Sync Logic End ---
-
-        // Initialize all slideshows
-        document.querySelectorAll('.slideshow-container').forEach(container => {
-            const slideshow = container.querySelector('.slideshow');
-            const slides = slideshow.querySelectorAll('.slide');
-            const prevButton = container.querySelector('.slideshow-nav.prev');
-            const nextButton = container.querySelector('.slideshow-nav.next');
-            const playPauseButton = container.querySelector('.play-pause');
-            
-            let currentSlide = 0;
-            let autoplayInterval;
-            let isPlaying = true;
-
-            function showSlide(n) {
-                slides.forEach(slide => slide.classList.remove('active'));
-                currentSlide = (n + slides.length) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }
-
-            function changeSlide(n) {
-                showSlide(currentSlide + n);
-                resetAutoplay();
-            }
-
-            function togglePlayPause() {
-                if (isPlaying) {
-                    clearInterval(autoplayInterval);
-                    playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
-                } else {
-                    startAutoplay();
-                    playPauseButton.innerHTML = '<i class="fa fa-pause"></i>';
-                }
-                isPlaying = !isPlaying;
-            }
-
-            function startAutoplay() {
-                autoplayInterval = setInterval(() => {
-                    showSlide(currentSlide + 1);
-                }, 5000);
-            }
-
-            function resetAutoplay() {
-                clearInterval(autoplayInterval);
-                if (isPlaying) {
-                    startAutoplay();
-                }
-            }
-
-            // Initialize this slideshow
-            showSlide(0);
-            startAutoplay();
-
-            // Add event listeners
-            prevButton.addEventListener('click', () => changeSlide(-1));
-            nextButton.addEventListener('click', () => changeSlide(1));
-            playPauseButton.addEventListener('click', togglePlayPause);
-        });
-
-        // Handle main video play button
-        const mainVideo = document.querySelector('.main-video');
-        const playButton = document.querySelector('.play-button-overlay');
-        
-        if (mainVideo && playButton) {
-            // Click play button to play video
-            playButton.addEventListener('click', () => {
-                mainVideo.play();
-                mainVideo.classList.add('playing');
-            });
-
-            // Handle video play/pause events
-            mainVideo.addEventListener('play', () => {
-                mainVideo.classList.add('playing');
-            });
-
-            mainVideo.addEventListener('pause', () => {
-                mainVideo.classList.remove('playing');
-            });
-
-            mainVideo.addEventListener('ended', () => {
-                mainVideo.classList.remove('playing');
-            });
-        }
-
-        // -----------------------------
-        // 🖼️ Click-to-zoom Lightbox
-        // -----------------------------
-        // Build overlay once
-        const lightbox = document.createElement('div');
-        lightbox.className = 'lightbox-overlay';
-        lightbox.setAttribute('role', 'dialog');
-        lightbox.setAttribute('aria-modal', 'true');
-        lightbox.innerHTML = '<img alt="Expanded image">';
-        document.body.appendChild(lightbox);
-        const lightboxImg = lightbox.querySelector('img');
-
-        function openLightbox(src, alt) {
-            lightboxImg.src = src;
-            lightboxImg.alt = alt || '';
-            lightbox.classList.add('active');
-            document.body.classList.add('no-scroll');
-        }
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-            lightboxImg.src = '';
-        }
-
-        // Close on click anywhere or on Esc
-        lightbox.addEventListener('click', closeLightbox);
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
-        });
-
-        // Mark target images as zoomable and wire up click
-        const zoomableImages = document.querySelectorAll('.image-container img, .slideshow img, .main-content img.img, .hero-section img.img');
-        zoomableImages.forEach(img => {
-            img.classList.add('zoomable');
-            img.addEventListener('click', () => {
-                // support optional high-res source via data-fullsrc
-                const src = img.getAttribute('data-fullsrc') || img.currentSrc || img.src;
-                openLightbox(src, img.alt);
-            });
-        });
-    });
     </script>
+
+
 </body>
 </html>
