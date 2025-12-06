@@ -354,31 +354,29 @@
 
     
     <script>
-        // add your functions here
-        function changeSlide(button, direction) { … }
+    function changeSlide(button, direction) {
+        // Find the slideshow container that this button belongs to
+        const container = button.closest(".slideshow-container");
+        const slideshow = container.querySelector(".slideshow");
+        const slides = slideshow.querySelectorAll(".slide");
 
-        function toggleMute(element) { … }
+        // Find current slide index
+        let currentIndex = Array.from(slides).findIndex(slide =>
+            slide.classList.contains("active")
+        );
 
-        // lightbox zoom code
-        document.addEventListener("DOMContentLoaded", () => {
-            const overlay = document.createElement("div");
-            overlay.className = "lightbox-overlay";
-            overlay.innerHTML = "<img>";
-            document.body.appendChild(overlay);
+        // Remove active from current
+        slides[currentIndex].classList.remove("active");
 
-            document.querySelectorAll("img.zoomable").forEach(img => {
-                img.addEventListener("click", () => {
-                    overlay.querySelector("img").src = img.src;
-                    overlay.classList.add("active");
-                    document.body.classList.add("no-scroll");
-                });
-            });
+        // Compute next index
+        currentIndex += direction;
 
-            overlay.addEventListener("click", () => {
-                overlay.classList.remove("active");
-                document.body.classList.remove("no-scroll");
-            });
-        });
+        if (currentIndex < 0) currentIndex = slides.length - 1;
+        if (currentIndex >= slides.length) currentIndex = 0;
+
+        // Add active to new slide
+        slides[currentIndex].classList.add("active");
+    }
     </script>
 
 
