@@ -92,7 +92,7 @@ bash run_scripts/val/run_val_unit_demo.sh
 
 
 ### Demo Result
-Running the demo inference script will generate the following text restoration results. The visualized images are shown in the order: **Low-Quality image / Restored High-Quality image / Ground Truth image.**
+Running the demo inference script will generate the following text restoration results. The visualized images are shown in the order: **Low-Quality image / Restored High-Quality image / Ground Truth image.** Checkout our [Project Page](https://cvlab-kaist.github.io/UniT/) for full text restoration qualitative results!
 <p align="center">
   <img src="assets/demo_result/demo1.png" width="800">
 </p>
