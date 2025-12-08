@@ -1,0 +1,18 @@
+img id: sa_953409_crop_0
+
+gt_text: HOTEL HOTEL
+vlm_output: HOTEL
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "HOTEL HOTEL", and the VLM OCR output is "HOTEL". So first, I need to extract the text from the OCR output, which is just "HOTEL".
+
+Next, comparing it to the ground truth. The ground truth has two instances of "HOTEL", but the OCR output has one. But the instructions say that word order doesn't matter, and we should consider the set of unique words. The ground truth's unique words are just "HOTEL" (since both words are the same). The OCR output also has "HOTEL" as the only word. 
+
+So, ignoring case, spacing, etc., the OCR output has all the unique words from the ground truth. Even though there's a difference in the number of times the word appears, the category is based on unique words. Since "HOTEL" is present in both, and there are no other words, it's a complete match. Even if the OCR missed one instance, since the unique set is the same, it's category 1. Small typos are allowed, but there are none here. So the answer should be 1.
+</think>
+LLM classification result: 1
+1. Correct Num: 173
+2. Slightly Correct Num: 90
+3. Incorrect Num: 479

@@ -1,0 +1,24 @@
+img id: sa_911228_crop_0
+
+gt_text: NYHAVN randstraede
+vlm_output: MYHAVN
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "NYHAVN randstraede" and the OCR output is "MYHAVN". So, first, I need to extract the text from the OCR output, which is just "MYHAVN".
+
+Now, comparing that to the ground truth. The ground truth has two words: "NYHAVN" and "randstraede". The OCR output has one word: "MYHAVN".
+
+The instructions say that word order doesn't matter. Also, we should compare based on the set of unique words in the ground truth. So, the unique words are "NYHAVN" and "randstraede". The OCR output has "MYHAVN".
+
+Next, ignore capitalization. So "MYHAVN" vs "NYHAVN" – if we ignore case, they are both "myhavn" and "nyhavn". But they are different words. Wait, but the problem says "small typos still count as matches". So, is "MYHAVN" considered a typo of "NYHAVN"? Let me think. The difference is the first letter: M vs N. That's a single character change. So maybe that counts as a small typo. But I need to check the exact instructions. The user says "small typos still count as matches." So if the OCR output has a typo but the word is otherwise the same, it's considered a match. However, here the OCR output is missing the second word "randstraede" entirely. 
+
+So the ground truth has two unique words. The OCR output has one word, which is a typo of one of the ground truth words. So does that count as all unique words appearing? The ground truth has "NYHAVN" and "randstraede". The OCR output has "MYHAVN" (a typo of "NYHAVN") but no "randstraede". So only one of the two unique words is present (as a typo). Therefore, according to the categories, category 2 is "at least one but not all unique words match." So the answer would be 2.
+
+Wait, but the instruction says "all unique ground truth words appear in the OCR output". Since the OCR output has only one word, which is a typo of one of the ground truth words, but the other word is missing. So it's not all unique words. Hence, it's category 2. But maybe the user considers that the OCR output has a typo of one word, but not the other. So category 2 is correct here. So the answer is 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 121
+2. Slightly Correct Num: 56
+3. Incorrect Num: 311

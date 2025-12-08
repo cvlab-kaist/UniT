@@ -1,0 +1,37 @@
+img id: sa_89438_crop_0
+
+gt_text: USAirmail 13 13 USAirmail
+vlm_output: 13+ USAirmail
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked here. The user provided a ground truth text and a VLM OCR output. My job is to categorize the OCR output into one of three categories based on how well it matches the ground truth, considering specific rules.
+
+The ground truth text is "USAirmail 13 13 USAirmail". The OCR output is "13+ USAirmail". Let's break down the steps as outlined.
+
+Step 1: Extract the text content from the VLM OCR output. That's straightforward. The OCR output is "13+ USAirmail". I need to process this text.
+
+Step 2: Compare the extracted text with the ground truth. The comparison has several conditions:
+- Word order doesn't matter.
+- Compare based only on the set of unique words in the ground truth.
+- Ignore capitalization, punctuation, and extra/missing spaces.
+- Small typos still count as matches.
+
+First, let's identify the unique words in the ground truth. The ground truth is "USAirmail 13 13 USAirmail". Breaking it down, the words are "USAirmail", "13", "13", and "USAirmail" again. So the unique words are "USAirmail" and "13". So the set is {"USAirmail", "13"}.
+
+Now, looking at the OCR output: "13+ USAirmail". Let's process this. The words here are "13+", "USAirmail". But we need to consider if "13+" is considered a match for "13" in the ground truth. The rules say to ignore punctuation, so the "+" might be ignored. Also, small typos count as matches. However, "13+" has an extra character. But the instruction says to ignore punctuation. So if we remove the "+", it becomes "13", which matches exactly. So "13+" would be considered as "13" for the purpose of comparison.
+
+Then, "USAirmail" in the OCR output is the same as in the ground truth, except for capitalization. But the rules say to ignore capitalization. However, the ground truth has "USAirmail" with uppercase U and S, while the OCR output has "USAirmail" as well. Wait, the OCR output's "USAirmail" is exactly the same as the ground truth. So that's a match.
+
+So the OCR output has "13+" which we process to "13" and "USAirmail" which matches exactly. Therefore, the OCR output contains both unique words from the ground truth: "13" and "USAirmail".
+
+Therefore, according to the categories:
+- Category 1: All unique ground truth words appear in the OCR output (ignoring order, case, spacing, typos).
+
+So the answer should be category 1.
+</think>
+LLM classification result: 1
+1. Correct Num: 98
+2. Slightly Correct Num: 41
+3. Incorrect Num: 247

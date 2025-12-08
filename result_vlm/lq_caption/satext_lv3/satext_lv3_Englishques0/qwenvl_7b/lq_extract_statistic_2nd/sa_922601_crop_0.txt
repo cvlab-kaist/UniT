@@ -1,0 +1,26 @@
+img id: sa_922601_crop_0
+
+gt_text: APLI
+vlm_output: 100%
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "APLI" and the VLM OCR output is "100%". I need to figure out which category this falls into based on the steps provided.
+
+First, step 1 is to extract the text content from the OCR output. The OCR output here is "100%", so the extracted text is just that. 
+
+Step 2 says to compare the extracted text with the ground truth, considering that word order doesn't matter. Also, compare based only on the set of unique words in the ground truth. The ground truth is "APLI", which is one word. The OCR output is "100%", which is another single word. 
+
+Now, the instructions mention ignoring capitalization, punctuation, and extra/missing spaces. But here, the ground truth is "APLI" (all caps) and the OCR output is "100%" (numbers and a percent sign). So, the unique words in the ground truth are just "APLI". The OCR output has "100%", which is a number and a symbol. 
+
+The categories are: 1 if all unique ground truth words are present in the OCR output, 2 if at least one but not all, and 3 otherwise. Since "APLI" is a word that's not present in "100%", and there's no overlap in the words. The OCR output doesn't have any of the unique words from the ground truth. 
+
+Wait, but the problem says to compare based only on the set of unique words in the ground truth. The ground truth's unique words are "APLI". The OCR output's words are "100%", which is a number. Since there's no match between "APLI" and "100%", even if we ignore case, punctuation, etc., they are different. So, the OCR output doesn't contain any of the ground truth words. Therefore, it's category 3: Incorrect. 
+
+I think that's right. The OCR output is completely unrelated to the ground truth text. There's no match in the words, even with the leniencies mentioned. So the answer should be 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 140
+2. Slightly Correct Num: 64
+3. Incorrect Num: 352

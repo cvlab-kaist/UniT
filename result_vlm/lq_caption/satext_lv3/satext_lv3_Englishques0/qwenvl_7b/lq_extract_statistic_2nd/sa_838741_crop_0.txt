@@ -1,0 +1,31 @@
+img id: sa_838741_crop_0
+
+gt_text: INTERNATIONAL CORPORATION SERVICE
+vlm_output: 100
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. So, the ground truth text is "INTERNATIONAL CORPORATION SERVICE" and the VLM OCR output is "100". The task is to determine which category (1, 2, or 3) this falls into based on the given criteria.
+
+First, I need to follow the steps outlined. Step 1 is to extract the text content from the OCR output. The OCR output here is "100", which is just the number 100. 
+
+Next, Step 2 involves comparing the extracted text with the ground truth. The comparison has several considerations: word order doesn't matter, we compare based on the set of unique words from the ground truth, ignore capitalization, punctuation, and spacing, and small typos still count as matches.
+
+Let me break down the ground truth. The ground truth text is "INTERNATIONAL CORPORATION SERVICE". Splitting this into words, we have three unique words: "INTERNATIONAL", "CORPORATION", and "SERVICE". 
+
+Now, the OCR output is "100". This is a number, not any of the words from the ground truth. The problem says to compare based on the set of unique words in the ground truth. So, do any of the OCR output's words (which is just "100") match any of the ground truth words? 
+
+Looking at the words, "100" is a number, while the ground truth words are all proper nouns. There's no overlap here. The OCR output doesn't have any of the words from the ground truth. Even if we consider typos, "100" doesn't resemble any of the words. For example, "INTERNATIONAL" is a long word, "CORPORATION" is another, and "SERVICE" is short. "100" doesn't look like any of these, even with typos considered. 
+
+The categories are: 
+1 if all unique ground truth words are present in the OCR output (which they aren't here),
+2 if at least one but not all match (but here, none match),
+3 if no words match or the output is unrelated.
+
+Since the OCR output is "100" and none of the ground truth words are present, even after considering the allowed variations (case, spacing, typos), this would fall into category 3. The output is completely unrelated and doesn't contain any of the required words. Therefore, the answer should be 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 24
+2. Slightly Correct Num: 8
+3. Incorrect Num: 38

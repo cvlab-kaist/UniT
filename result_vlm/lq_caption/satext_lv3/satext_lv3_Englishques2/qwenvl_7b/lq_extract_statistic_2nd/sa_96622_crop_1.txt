@@ -1,0 +1,22 @@
+img id: sa_96622_crop_1
+
+gt_text: Lufthansa
+vlm_output: The image shows part of an airplane with the word "UNITED" visible on its side. The rest of the text is not clear due to the blurriness.
+
+----------------------------
+
+<think>
+Okay, let's see. The user wants me to determine the category based on the OCR output compared to the ground truth. The ground truth is "Lufthansa". The OCR output says "The image shows part of an airplane with the word 'UNITED' visible on its side. The rest of the text is not clear due to the blurriness."
+
+First, step 1 is to extract the text content from the OCR output. The OCR output mentions "UNITED" as the visible word. The rest is about the image being blurry. So the extracted text here is "UNITED".
+
+Now step 2: compare this with the ground truth "Lufthansa". The unique words in the ground truth are just "Lufthansa". The OCR output has "UNITED". 
+
+Looking at the criteria: word order doesn't matter, but we need to check if the unique words from the ground truth are present. The ground truth has "Lufthansa", and the OCR output has "UNITED". These are different words. Even if we consider case, "UNITED" vs "Lufthansa" are not the same. Also, there's no mention of "Lufthansa" in the OCR output. So the OCR output doesn't have any of the unique words from the ground truth. 
+
+The categories are: 1 if all unique words match, 2 if at least one but not all, 3 if none match or it's unrelated. Since "UNITED" is not "Lufthansa", there's no match. The OCR output didn't capture the correct word. So category 3 would be incorrect. But wait, the OCR output says "the word 'UNITED' visible on its side". The image is of an airplane. Lufthansa is an airline, so maybe the image is of a Lufthansa plane, but the OCR didn't recognize it. However, according to the problem, we are to compare the extracted text from OCR, which is "UNITED", against the ground truth "Lufthansa". There's no overlap in the words. So category 3 is the answer.
+</think>
+LLM classification result: 3
+1. Correct Num: 200
+2. Slightly Correct Num: 102
+3. Incorrect Num: 506

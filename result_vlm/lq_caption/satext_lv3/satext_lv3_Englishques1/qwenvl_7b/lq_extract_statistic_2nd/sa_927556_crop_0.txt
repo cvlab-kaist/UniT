@@ -1,0 +1,63 @@
+img id: sa_927556_crop_0
+
+gt_text: FORTALEZA RUINAS Mount MONTE Ruins Fortress DO DE Paul's S.PAULO St. of
+vlm_output: HONG KONGKOWLOON
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked here. The user provided a ground truth text and a VLM OCR output. They want me to categorize the OCR output into one of three categories based on how well it matches the ground truth text, considering specific rules.
+
+So, the ground truth text is: "FORTALEZA RUINAS Mount MONTE Ruins Fortress DO DE Paul's S.PAULO St. of". The OCR output is "HONG KONGKOWLOON". 
+
+Step 1 is to extract the text content from the OCR output. That's straightforward—it's just "HONG KONGKOWLOON". 
+
+Step 2 involves comparing this extracted text with the ground truth, but with some specific conditions. The key points here are:
+
+- Word order doesn't matter.
+- Compare based only on the set of unique words in the ground truth.
+- Ignore capitalization, punctuation, and extra/missing spaces.
+- Small typos still count as matches.
+
+The categories are:
+1 — Correct: all unique ground truth words appear in the OCR output.
+2 — Slightly correct: at least one but not all unique words match.
+3 — Incorrect: no words match, or the output is largely wrong, unrelated, or empty.
+
+First, I need to process the ground truth text. Let's break it down into unique words, ignoring case and punctuation. Let's see:
+
+Original ground truth: "FORTALEZA RUINAS Mount MONTE Ruins Fortress DO DE Paul's S.PAULO St. of"
+
+Breaking it down into words, considering that "Paul's" has an apostrophe but we're ignoring punctuation. Also, ignoring case:
+
+- FORTALEZA → FORTALEZA
+- RUINAS → RUINAS
+- Mount → MOUNT
+- MONTE → MONTE
+- Ruins → RUINS
+- Fortress → FORTRESS
+- DO → DO
+- DE → DE
+- Paul's → PAUL
+- S.PAULO → SPAULO (since we ignore punctuation, so S.PAULO becomes SPAULO)
+- St. → ST
+- of → OF
+
+So the unique words in the ground truth (case-insensitive, no punctuation) are: FORTALEZA, RUINAS, MOUNT, MONTE, RUINS, FORTRESS, DO, DE, PAUL, SPAULO, ST, OF.
+
+Now, the OCR output is "HONG KONGKOWLOON". Let's process that similarly. Ignore case and punctuation. The OCR output has "HONG KONGKOWLOON". Breaking it into words: HONG, KONGKOWLOON. 
+
+Wait, but "KONGKOWLOON" might be a typo. However, the user says small typos still count as matches. But in this case, the OCR output has "KONGKOWLOON", which is a single word. Let's check if any of the ground truth words are present here.
+
+Looking at the list of ground truth words: FORTALEZA, RUINAS, MOUNT, MONTE, RUINS, FORTRESS, DO, DE, PAUL, SPAULO, ST, OF.
+
+None of these words are present in the OCR output. The OCR output has "HONG" and "KONGKOWLOON". These are not part of the ground truth words. 
+
+So, the OCR output has no words that match any of the ground truth words. Therefore, according to the categories, this would fall under category 3: Incorrect, since no words match and the output is unrelated.
+
+Wait, but let me double-check. Could "KONGKOWLOON" be a typo for any of the ground truth words? For example, "KONG" is not in the ground truth. "KOWLOON" is a real place, but the ground truth has "S.PAULO" which is São Paulo, but that's not related. The OCR output's words are entirely different from the ground truth. Therefore, no matches at all. So category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 143
+2. Slightly Correct Num: 69
+3. Incorrect Num: 377

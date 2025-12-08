@@ -1,0 +1,28 @@
+img id: sa_922209_crop_0
+
+gt_text: TAXI-METER
+vlm_output: TAXIMETER
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth is "TAXI-METER" and the OCR output is "TAXIMETER". 
+
+First, I need to extract the text from the OCR output, which is straightforward here—it's "TAXIMETER". 
+
+Next, comparing it to the ground truth. The instructions say word order doesn't matter, so I can ignore that. The unique words in the ground truth are "TAXI" and "METER" (since "TAXI-METER" is one word, but maybe split into two? Wait, the ground truth is "TAXI-METER" as a single word. But the OCR output is "TAXIMETER" as a single word. 
+
+Wait, the problem says to compare based on the set of unique words in the ground truth. So the ground truth has one word: "TAXI-METER". The OCR output is "TAXIMETER". Are they considered the same? Let's check the rules. 
+
+The rules mention ignoring capitalization, punctuation, and extra/missing spaces. So "TAXI-METER" vs "TAXIMETER"—the OCR output is missing the hyphen. But the instruction says to ignore punctuation. So the hyphen is punctuation, so it's ignored. Then, the OCR output is "TAXIMETER" versus the ground truth's "TAXI-METER" without the hyphen. So if we remove the hyphen from the ground truth, it becomes "TAXIMETER", which matches the OCR output exactly. 
+
+But wait, the ground truth is a single word, and the OCR output is a single word. So the unique words in the ground truth are just one: "TAXI-METER". The OCR output is "TAXIMETER". But according to the rules, we compare based on the set of unique words in the ground truth. So the OCR output needs to contain all the unique words from the ground truth, but considering the rules. 
+
+But since the ground truth is one word, "TAXI-METER", and the OCR output is "TAXIMETER", which is the same word without the hyphen. Since we ignore punctuation, the hyphen is removed. So "TAXI-METER" becomes "TAXIMETER" when ignoring punctuation. Therefore, the OCR output matches the ground truth exactly. 
+
+Therefore, all unique ground truth words (which is just one) are present in the OCR output. So the category is 1 — Correct.
+</think>
+LLM classification result: 1
+1. Correct Num: 136
+2. Slightly Correct Num: 61
+3. Incorrect Num: 353

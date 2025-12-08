@@ -1,0 +1,46 @@
+img id: sa_865815_crop_0
+
+gt_text: REBOQUE SUJEITOS EXCLUSIVA VIA VEICULOS MULTA AUTOMOTORES VLT DO E A DO VLT
+vlm_output: NO DELIVERY ATSUNDAY 10:00-14:00
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The user wants me to compare the OCR output with the ground truth text based on specific criteria. Let me first understand what's given.
+
+Ground truth text: "REBOQUE SUJEITOS EXCLUSIVA VIA VEICULOS MULTA AUTOMOTORES VLT DO E A DO VLT"
+
+OCR output: "NO DELIVERY ATSUNDAY 10:00-14:00"
+
+The steps are: extract the OCR text, compare with ground truth considering word order doesn't matter, only unique words from ground truth, ignore case, punctuation, spacing, and small typos. Then categorize into 1, 2, or 3.
+
+First, I need to extract the OCR text, which is already given as "NO DELIVERY ATSUNDAY 10:00-14:00".
+
+Next, process the ground truth text. Let's split it into words, ignoring case, punctuation, and spaces. Let me list the ground truth words:
+
+Original ground truth: "REBOQUE SUJEITOS EXCLUSIVA VIA VEICULOS MULTA AUTOMOTORES VLT DO E A DO VLT"
+
+Breaking it down, words are: Reboque, Sujeitos, Exclusiva, Via, Veiculos, Multa, Automotores, VLT, Do, E, A, Do, VLT.
+
+But since we need unique words, let's list them without duplicates:
+
+Reboque, Sujeitos, Exclusiva, Via, Veiculos, Multa, Automotores, VLT, Do, E, A.
+
+So the unique words from ground truth are: Reboque, Sujeitos, Exclusiva, Via, Veiculos, Multa, Automotores, VLT, Do, E, A.
+
+Now, the OCR output is "NO DELIVERY ATSUNDAY 10:00-14:00". Let's split this into words, ignoring case and punctuation. Let's process:
+
+NO, DELIVERY, ATSUNDAY, 10:00-14:00. But the OCR output might have some typos. Let me check the words again.
+
+Wait, "ATSUNDAY" could be a typo for "SUNDAY". Also, the time part "10:00-14:00" is probably not a word here. The problem says to ignore punctuation and extra spaces, but the time might be considered as part of the text. However, the ground truth doesn't have any time-related words. Let me check the ground truth again. The ground truth words are all related to vehicles, penalties, etc. The OCR output has "NO DELIVERY", "ATSUNDAY", and a time. None of these words seem to match the ground truth words.
+
+So, the OCR output's words are NO, DELIVERY, ATSUNDAY, 10:00-14:00. Let me check if any of these words (case-insensitive) match the ground truth words. The ground truth words include Reboque, Sujeitos, Exclusiva, Via, Veiculos, Multa, Automotores, VLT, Do, E, A.
+
+Looking at the OCR words: "NO" doesn't match any. "DELIVERY" doesn't match. "ATSUNDAY" might be a typo for "SUNDAY", but that's not in the ground truth. The time "10:00-14:00" is not a word in the ground truth. So none of the OCR words match any of the ground truth words. Therefore, according to the criteria, if no words match, it's category 3.
+
+Wait, but the problem says to consider small typos as matches. Let me check again. For example, if "ATSUNDAY" was "SUNDAY", but the ground truth doesn't have "SUNDAY". Similarly, "NO" is not in the ground truth. "DELIVERY" is not there. So there's no match. Hence, category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 60
+2. Slightly Correct Num: 25
+3. Incorrect Num: 143

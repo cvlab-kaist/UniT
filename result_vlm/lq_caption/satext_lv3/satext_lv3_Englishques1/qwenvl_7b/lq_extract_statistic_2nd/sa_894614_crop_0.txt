@@ -1,0 +1,29 @@
+img id: sa_894614_crop_0
+
+gt_text: WORKHOUSE
+vlm_output: BIBOBO
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "WORKHOUSE" and the VLM OCR output is "BIBOBO". I need to determine which category (1, 2, or 3) this falls into based on the given criteria.
+
+First, Step 1 says to extract the text content from the OCR output. The OCR output here is "BIBOBO". So that's straightforward.
+
+Step 2 involves comparing this extracted text with the ground truth. The comparison has several considerations: word order doesn't matter, we only look at the set of unique words in the ground truth, ignore capitalization, punctuation, and extra/missing spaces, and small typos still count as matches.
+
+The categories are:
+1 — Correct if all unique ground truth words are in the OCR output (ignoring order, case, spacing, typos).
+2 — Slightly correct if at least one but not all unique words match.
+3 — Incorrect if no words match or the output is unrelated/empty.
+
+First, let's break down the ground truth. The ground truth is "WORKHOUSE". That's a single word. So the set of unique words is just {"WORKHOUSE"}.
+
+Now, the OCR output is "BIBOBO". Let's see if "BIBOBO" contains the word "WORKHOUSE" when considering the given criteria. However, "BIBOBO" is a different word. Let me check if there's any overlap. The letters in "WORKHOUSE" are W, O, R, K, H, O, U, S, E. The OCR output is B, I, B, O, B, O. There's an 'O' in both, but that's the only common letter. However, the problem says to compare based on the set of unique words in the ground truth. Since the ground truth has only one word, "WORKHOUSE", and the OCR output has "BIBOBO", which isn't the same word. Even if we consider typos, "BIBOBO" doesn't seem to be a typo for "WORKHOUSE". There's no overlap in the words. The OCR output doesn't contain the ground truth word, even when ignoring case, spacing, etc. So there's no match here.
+
+Therefore, since the OCR output doesn't have any of the unique words from the ground truth (which is only "WORKHOUSE"), this would fall under category 3 — Incorrect.
+</think>
+LLM classification result: 3
+1. Correct Num: 98
+2. Slightly Correct Num: 41
+3. Incorrect Num: 249

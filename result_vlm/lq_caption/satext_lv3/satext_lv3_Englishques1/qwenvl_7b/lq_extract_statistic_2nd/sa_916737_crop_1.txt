@@ -1,0 +1,22 @@
+img id: sa_916737_crop_1
+
+gt_text: RafflesHospital
+vlm_output: Bedford Hotel
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth is "RafflesHospital" and the OCR output is "Bedford Hotel". So I need to follow the steps given.
+
+First, extract the text from the OCR output. That's "Bedford Hotel".
+
+Next, compare it with the ground truth. The instructions say word order doesn't matter. So I should look at the unique words in the ground truth. The ground truth is "RafflesHospital" which is one word. But wait, maybe it's supposed to be "Raffles Hospital"? But the original text is written as one word. Hmm, but the OCR output is "Bedford Hotel", which is two words.
+
+The categories are based on whether the OCR output has all the unique words from the ground truth. The ground truth has "RafflesHospital" as a single word. The OCR output has "Bedford" and "Hotel". So none of those words match "RafflesHospital" even if we ignore case and typos. Because "Bedford" and "Hotel" are different words. So the unique words in the ground truth are just "RafflesHospital", and the OCR output doesn't have that. So no matches. Therefore, category 3: Incorrect.
+
+Wait, but maybe the ground truth is supposed to be split into two words? Like "Raffles Hospital"? But the original text is given as "RafflesHospital" without a space. So the OCR output is "Bedford Hotel" which is two words. But the ground truth is one word. So the set of unique words in ground truth is {"RafflesHospital"}, and the OCR output has {"Bedford", "Hotel"}. So no overlap. Therefore, category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 127
+2. Slightly Correct Num: 58
+3. Incorrect Num: 333

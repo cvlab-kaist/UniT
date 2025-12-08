@@ -1,0 +1,27 @@
+img id: sa_922281_crop_0
+
+gt_text: 700
+vlm_output: TNT
+
+----------------------------
+
+<think>
+Okay, let's break this down. The ground truth text is "700" and the VLM OCR output is "TNT". 
+
+First, Step 1 says to extract the text content from the OCR output. So "TNT" is the extracted text.
+
+Step 2 involves comparing the extracted text with the ground truth. The instructions mention that word order doesn't matter, so I don't have to check the sequence. The comparison is based on the set of unique words in the ground truth. The ground truth here is "700", which is a single word. The OCR output is "TNT", which is another single word. 
+
+Now, considering the criteria: ignore capitalization, punctuation, and spaces. But here, both are single words without any of those. However, the problem is that "700" is a number, and "TNT" is letters. The instruction says small typos still count as matches, but this isn't a typo—it's a completely different set of characters. 
+
+The categories are:
+1 — Correct if all unique ground truth words are in OCR output. But "700" isn't present in "TNT". The OCR output has "TNT", which is not a match for "700". So no words match here. 
+
+Category 3 is for when no words match or the output is unrelated. Since "TNT" is unrelated to "700", this would fall under category 3. 
+
+Wait, but the ground truth has only one unique word, "700". The OCR output has "TNT", which is different. So there are no matching words. Therefore, category 3 applies.
+</think>
+LLM classification result: 3
+1. Correct Num: 132
+2. Slightly Correct Num: 66
+3. Incorrect Num: 353

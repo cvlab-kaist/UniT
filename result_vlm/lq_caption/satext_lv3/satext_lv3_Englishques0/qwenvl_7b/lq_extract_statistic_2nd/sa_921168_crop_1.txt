@@ -1,0 +1,29 @@
+img id: sa_921168_crop_1
+
+gt_text: CENTURY PARK HOTEL
+vlm_output: HOTEL
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "CENTURY PARK HOTEL" and the VLM OCR output is just "HOTEL". 
+
+First, I need to extract the text content from the OCR output, which is straightforward here—it's "HOTEL".
+
+Next, comparing the extracted text with the ground truth. The instructions say to consider word order doesn't matter, so I can ignore the sequence. The ground truth has three words: "CENTURY", "PARK", and "HOTEL". The OCR output only has "HOTEL". 
+
+Now, checking the unique words in the ground truth. The set is {"CENTURY", "PARK", "HOTEL"}. The OCR output's set is {"HOTEL"}. 
+
+The comparison criteria mention that we should ignore capitalization, punctuation, and spacing. Since "HOTEL" in the OCR matches "HOTEL" in the ground truth exactly (case doesn't matter here, but they are the same), that's one word matching. However, the other two words, "CENTURY" and "PARK", are not present in the OCR output.
+
+The categories are: 
+1 if all unique ground truth words are present in OCR (which they aren't here),
+2 if at least one but not all match (which is the case here, since only one out of three matches),
+3 if none match or it's unrelated.
+
+So, since one word matches, the category should be 2—partially correct.
+</think>
+LLM classification result: 2
+1. Correct Num: 138
+2. Slightly Correct Num: 62
+3. Incorrect Num: 343

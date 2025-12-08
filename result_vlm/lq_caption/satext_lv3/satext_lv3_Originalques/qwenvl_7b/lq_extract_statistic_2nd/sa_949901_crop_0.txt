@@ -1,0 +1,24 @@
+img id: sa_949901_crop_0
+
+gt_text: HUIS ANNE FRANK
+vlm_output: The text in the image reads:  ``` 100 ```
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "HUIS ANNE FRANK". The VLM OCR output is "The text in the image reads:  ``` 100 ```". 
+
+First, I need to extract the text content from the OCR output. The OCR says the image reads "100" inside some code-like formatting with backticks. So the extracted text is just "100".
+
+Now, comparing that to the ground truth. The ground truth has three words: HUIS, ANNE, FRANK. The OCR output has "100", which is a number. 
+
+The instructions say to compare based on the set of unique words in the ground truth. So, the unique words are HUIS, ANNE, FRANK. The OCR output has "100", which isn't any of those words. 
+
+Also, the categories are: 1 if all unique words are present (ignoring order, case, spacing, typos), 2 if at least one matches, 3 if none. Since none of the words from the ground truth are in the OCR output, it should be category 3. 
+
+Wait, but what about typos? Like, if the OCR had a typo but still had the same words. But here, the OCR output is "100", which is a number, not any of the words. So no matches. So category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 180
+2. Slightly Correct Num: 81
+3. Incorrect Num: 460

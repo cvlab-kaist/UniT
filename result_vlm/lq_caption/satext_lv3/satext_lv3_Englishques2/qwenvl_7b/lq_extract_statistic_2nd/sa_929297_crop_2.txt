@@ -1,0 +1,33 @@
+img id: sa_929297_crop_2
+
+gt_text: JBL SONY
+vlm_output: The image contains the following visible text:- "100%"- "100%"These appear to be percentages, possibly indicating a rating or score. The rest of the image is too blurry to discern any other details.
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked. The ground truth text is "JBL SONY", and the VLM OCR output is a description that mentions "100%" twice and says the rest is blurry. The task is to compare the extracted text from the OCR output with the ground truth based on specific criteria.
+
+Step 1 says to extract the text content from the VLM OCR output. The OCR output here is a description, not actual text from an image. The visible text mentioned is "100%" and "100%", and the rest is blurry. So the extracted text would be "100%", "100%", and the rest is unclear. But the user probably wants the actual text that was recognized, which in this case is just the two instances of "100%".
+
+Next, Step 2: Compare this extracted text with the ground truth. The ground truth is "JBL SONY", which are two brand names. The OCR output has "100%" repeated. Now, the comparison rules are:
+
+- Word order doesn't matter.
+- Compare based on unique words in the ground truth.
+- Ignore case, punctuation, spaces.
+- Small typos still count as matches.
+
+So the unique words in ground truth are "JBL" and "SONY". The OCR output has "100%", which is a percentage. There's no mention of "JBL" or "SONY" in the OCR output. The OCR output is talking about percentages, which are unrelated to the brands in the ground truth.
+
+The categories are:
+
+1 — Correct: all unique ground truth words are present.
+2 — Partially correct: at least one but not all.
+3 — Incorrect: none or unrelated.
+
+Since the OCR output doesn't mention "JBL" or "SONY" at all, there are zero matches. The OCR output is about percentages, which is unrelated. Therefore, it falls into category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 151
+2. Slightly Correct Num: 73
+3. Incorrect Num: 378

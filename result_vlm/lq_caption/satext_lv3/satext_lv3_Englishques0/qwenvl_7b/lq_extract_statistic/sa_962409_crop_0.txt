@@ -1,0 +1,28 @@
+img id: sa_962409_crop_0
+
+gt_text: 5
+vlm_output: 2014
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "5" and the VLM OCR output is "2014". I need to follow the steps provided to determine the category.
+
+First, Step 1 says to extract the text content from the OCR output. The OCR output here is "2014", so that's straightforward.
+
+Step 2 is comparing the extracted text with the ground truth. The instructions mention that word order doesn't matter, so I don't have to worry about the sequence. Also, comparing based only on the set of unique words in the ground truth. The ground truth is "5", which is a single word. So the unique words in ground truth are just {"5"}.
+
+Now, I need to check if the OCR output contains this word. The OCR output is "2014". Let's see if "5" is present in "2014". The digits here are 2, 0, 1, 4. There's no 5 in there. So the unique words in OCR are {"2", "0", "1", "4"}.
+
+The category definitions: Category 1 is correct if all unique ground truth words are present. Since the ground truth has "5" and the OCR output doesn't have that, it's not Category 1. 
+
+Category 2 is partially correct if at least one but not all unique words match. But the ground truth only has one unique word, "5", which isn't present in the OCR output. So there are zero matches. 
+
+Category 3 is for when no words match or the output is unrelated. Since there are no matches, this would fall into Category 3. 
+
+Wait, but maybe I'm misunderstanding. The ground truth is "5", which is a single number. The OCR output is "2014", which is a different number. Since none of the digits in the OCR output match the ground truth's "5", there are no overlapping words. Therefore, according to the categories, this is Category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 236
+2. Slightly Correct Num: 1
+3. Incorrect Num: 552

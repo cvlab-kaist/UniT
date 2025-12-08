@@ -1,0 +1,100 @@
+img id: sa_849294_crop_0
+
+gt_text: MOTOR VEHICLE CRUISING NO AHEAD 14-140 Sec C.O. per
+vlm_output: NO PARKING ANY TIME
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked. The user provided a ground truth text and an OCR output from a VLM. The task is to compare them based on specific criteria and categorize the result as 1, 2, or 3.
+
+Ground truth text: "MOTOR VEHICLE CRUISING NO AHEAD 14-140 Sec C.O. per"
+OCR output: "NO PARKING ANY TIME"
+
+Step 1 is to extract the text content from the OCR output. That's straightforward; the OCR output is "NO PARKING ANY TIME".
+
+Step 2 involves comparing this extracted text with the ground truth, considering several factors:
+- Word order doesn't matter.
+- Compare only the set of unique words in the ground truth.
+- Ignore capitalization, punctuation, and extra/missing spaces.
+- Small typos still count as matches.
+
+The categories are:
+1 — Correct: All unique ground truth words appear in the OCR output.
+2 — Slightly correct: At least one but not all unique words match.
+3 — Incorrect: No words match, or the output is largely wrong, unrelated, or empty.
+
+First, I need to extract the unique words from the ground truth. Let's break down the ground truth text:
+
+Original ground truth: "MOTOR VEHICLE CRUISING NO AHEAD 14-140 Sec C.O. per"
+
+Breaking into words, considering that hyphenated terms and abbreviations might be separate. However, the problem says to consider unique words in the ground truth. Let's list them:
+
+- MOTOR
+- VEHICLE
+- CRUISING
+- NO
+- AHEAD
+- 14-140
+- Sec
+- C.O.
+- per
+
+Wait, but the problem says "unique words in the ground truth". So we need to take each distinct word, ignoring case, punctuation, etc. Let's process them:
+
+- "MOTOR" → "motor"
+- "VEHICLE" → "vehicle"
+- "CRUISING" → "cruising"
+- "NO" → "no"
+- "AHEAD" → "ahead"
+- "14-140" → "14-140" (this is a number with hyphen, so maybe kept as is)
+- "Sec" → "sec"
+- "C.O." → "c.o." or "co" (but the original has a period, but the problem says to ignore punctuation. Wait, the instructions say to ignore punctuation. So "C.O." would become "C O" or "CO"? Hmm, but the user says "ignore punctuation", so maybe we remove the periods. So "C.O." becomes "CO" or "C O". However, the exact handling might be tricky. Let's think.
+
+But the problem says "ignore punctuation", so "C.O." would be "CO" (without the periods). Similarly, "Sec" becomes "sec" (lowercase). So the unique words from the ground truth, after processing (lowercase, no punctuation, ignoring spacing):
+
+motor, vehicle, cruising, no, ahead, 14-140, sec, co, per.
+
+Now the OCR output is "NO PARKING ANY TIME". Let's process that similarly:
+
+Original: "NO PARKING ANY TIME"
+
+Lowercase, no punctuation, ignore spacing (but the OCR output doesn't have any punctuation except maybe the words themselves. Wait, "NO" is uppercase, but we ignore case, so becomes "no". The rest are "parking", "any", "time".
+
+So the words in the OCR output are: no, parking, any, time.
+
+Now, compare the set of unique ground truth words with the OCR output's words.
+
+Ground truth unique words (processed): {motor, vehicle, cruising, no, ahead, 14-140, sec, co, per}
+
+OCR output words: {no, parking, any, time}
+
+Now, check if any of the OCR words are in the ground truth set.
+
+Looking at the OCR words:
+
+- "no" is present in the ground truth.
+- "parking" is not in the ground truth.
+- "any" is not in the ground truth.
+- "time" is not in the ground truth.
+
+So only "no" matches. The rest don't. The ground truth has other words like "motor", "vehicle", etc., which are not in the OCR output.
+
+So according to the categories:
+
+Category 1: All unique ground truth words appear in the OCR output. But here, only "no" is present. So that's not the case.
+
+Category 2: At least one but not all unique words match. Since "no" is present, but others are not. So this would be category 2.
+
+But wait, the problem says "based only on the set of unique words in the ground truth". So the OCR output must contain all of those words? No, the category 1 says "all unique ground truth words appear in the OCR output". But in this case, the OCR output only has "no" which is one of the ground truth words. So that's only one match. Therefore, it's category 2 (partially correct).
+
+But wait, the problem says "based only on the set of unique words in the ground truth". So the OCR output is compared to the set of ground truth words. The OCR output has "no" which is in the ground truth. The rest of the OCR words (parking, any, time) are not in the ground truth set. Therefore, only one match. Hence, category 2.
+
+But I need to make sure I didn't miss any other possible matches. For example, could "parking" be a typo for "parking" in the ground truth? But the ground truth doesn't have "parking". The ground truth has "cruising", "ahead", etc. So no, "parking" isn't present. Similarly, "any" and "time" are not in the ground truth words.
+
+So the answer should be category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 37
+2. Slightly Correct Num: 21
+3. Incorrect Num: 72

@@ -1,0 +1,27 @@
+img id: sa_922398_crop_0
+
+gt_text: 911 EMERGENCY
+vlm_output: 911
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "911 EMERGENCY" and the VLM OCR output is "911". 
+
+First, I need to extract the text content from the OCR output, which is straightforward here—it's just "911". 
+
+Next, comparing this with the ground truth. The ground truth has two words: "911" and "EMERGENCY". The OCR output only has "911". 
+
+The instructions say to consider word order as not important, so that's not an issue here. But we need to check if all unique words from the ground truth are present in the OCR output. The ground truth has two unique words, but the OCR only has one. 
+
+The categories are: 
+1 if all unique ground truth words are present (ignoring order, case, spacing, typos), 
+2 if at least one but not all match, 
+3 if none or it's unrelated.
+
+Since the OCR output has "911" which matches the first part of the ground truth, but misses "EMERGENCY", that means only one of the two unique words is present. Therefore, it's partially correct. So the category should be 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 132
+2. Slightly Correct Num: 68
+3. Incorrect Num: 354

@@ -1,0 +1,18 @@
+img id: sa_882351_crop_1
+
+gt_text: FedEx Express
+vlm_output: FedEx
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth is "FedEx Express" and the OCR output is "FedEx". So, first step is to extract the text from the OCR, which is just "FedEx". Then compare it to the ground truth.
+
+The instructions say word order doesn't matter. The ground truth has two unique words: "FedEx" and "Express". The OCR output has only "FedEx". So, checking if all unique ground truth words are present. Since "Express" is missing, that would mean not all are there. But the categories are: 1 if all unique words are present, 2 if at least one but not all, and 3 if none or mostly wrong.
+
+So in this case, the OCR output has one of the two words. So that's partially correct. So category 2. Wait, but the question says "unique words in the ground truth". The ground truth has two unique words. The OCR output has one. So at least one matches (FedEx), but not all. Therefore, category 2. But wait, the example might have different considerations. Also, the problem says to ignore capitalization, punctuation, spacing, but small typos count as matches. But here, the OCR output is exactly "FedEx", which is the same as the first word in the ground truth. So that's a match. "Express" is missing. So the answer should be category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 85
+2. Slightly Correct Num: 32
+3. Incorrect Num: 199

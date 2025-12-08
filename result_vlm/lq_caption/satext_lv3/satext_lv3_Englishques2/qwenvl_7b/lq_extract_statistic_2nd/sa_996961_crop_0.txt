@@ -1,0 +1,22 @@
+img id: sa_996961_crop_0
+
+gt_text: House CANNON Office Building DIRECTORY
+vlm_output: The image contains the following visible English text: "CANNON" and "LAW OFFICE BUILDING."
+
+----------------------------
+
+<think>
+Okay, let's tackle this step by step. First, I need to extract the text from the VLM OCR output. The OCR output says, "The image contains the following visible English text: 'CANNON' and 'LAW OFFICE BUILDING.'" So the extracted text here is "CANNON" and "LAW OFFICE BUILDING."
+
+Next, compare that with the ground truth text: "House CANNON Office Building DIRECTORY." The unique words in the ground truth are "House," "CANNON," "Office," "Building," and "DIRECTORY." Wait, but the OCR output has "CANNON," "LAW," "OFFICE," "BUILDING." Let me check again.
+
+Wait, the ground truth words are: House, CANNON, Office, Building, DIRECTORY. But the OCR output has CANNON, LAW, OFFICE, BUILDING. So, looking at the unique words from the ground truth, the OCR output has "CANNON" which matches exactly (case-insensitive, but here both are uppercase). Then "Office" in the ground truth is present as "OFFICE" in OCR, which is a match. "Building" in the ground truth is "BUILDING" in OCR, so that's a match. However, the ground truth also has "House" and "DIRECTORY," which are not present in the OCR output. The OCR has "LAW" instead of "House" and "DIRECTORY" is missing.
+
+But the instructions say to compare based only on the set of unique words in the ground truth. So the ground truth words are House, CANNON, Office, Building, DIRECTORY. The OCR output has CANNON, LAW, OFFICE, BUILDING. So the matches are CANNON, OFFICE, BUILDING. That's three out of five words. But wait, the category says if all unique ground truth words are present, it's category 1. If at least one but not all, it's 2. If none or mostly wrong, it's 3.
+
+So here, the OCR output has three of the five unique words. So that would be partially correct, category 2. However, I need to check if "LAW" is a typo for "House" or "DIRECTORY." But the problem says small typos still count as matches. However, "LAW" isn't a typo for "House" or "DIRECTORY." So it's not a match. So the OCR output has three correct words (CANNON, OFFICE, BUILDING) and two missing (House, DIRECTORY). So that's partial, so category 2. The answer should be 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 253
+2. Slightly Correct Num: 120
+3. Incorrect Num: 611

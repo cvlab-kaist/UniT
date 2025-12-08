@@ -1,0 +1,38 @@
+img id: sa_977962_crop_0
+
+gt_text: SCHOOL PLEASE RISHWORTH CAREFULLY DRIVE WELCOME TO
+vlm_output: Kingswood School
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The user wants me to compare the OCR output "Kingswood School" with the ground truth text "SCHOOL PLEASE RISHWORTH CAREFULLY DRIVE WELCOME TO" based on specific criteria.
+
+First, I need to extract the text from the OCR output. That's straightforward here; the OCR output is "Kingswood School". 
+
+Next, I have to compare this with the ground truth. The ground truth has the words: SCHOOL, PLEASE, RISHWORTH, CAREFULLY, DRIVE, WELCOME, TO. But the instructions say to consider only the set of unique words in the ground truth. Wait, does that mean I should look at all unique words in the ground truth, regardless of their count? Let me check the step 2 again. It says "Compare based only on the set of unique words in the ground truth." So the ground truth's unique words are SCHOOL, PLEASE, RISHWORTH, CAREFULLY, DRIVE, WELCOME, TO. 
+
+Now, the OCR output is "Kingswood School". Let's process this. The OCR output has two words: Kingswood and School. 
+
+The comparison rules are:
+- Word order doesn't matter.
+- Ignore capitalization, punctuation, and extra/missing spaces.
+- Small typos still count as matches.
+
+So, first, let's normalize the OCR output. "Kingswood School" becomes "kingswood school" (lowercase). The ground truth words are all in uppercase, but we can ignore case. 
+
+Now, check which ground truth words are present in the OCR output. The OCR has "school" (which matches "SCHOOL" in the ground truth). The other word is "kingswood", which isn't in the ground truth words. The ground truth has "RISHWORTH", "PLEASE", "CAREFULLY", "DRIVE", "WELCOME", "TO" – none of these are present in the OCR output. 
+
+So, the only matching word is "school" from the OCR output. The ground truth has seven unique words, but the OCR only matches one. 
+
+The categories are:
+1 – All unique ground truth words appear in OCR (which isn't the case here).
+2 – At least one but not all unique words match (which is true here, since only one matches).
+3 – Incorrect if no words match or output is unrelated.
+
+So the answer should be category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 210
+2. Slightly Correct Num: 101
+3. Incorrect Num: 566

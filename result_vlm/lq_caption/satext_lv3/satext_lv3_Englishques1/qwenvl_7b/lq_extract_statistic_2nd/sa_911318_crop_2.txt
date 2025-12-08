@@ -1,0 +1,20 @@
+img id: sa_911318_crop_2
+
+gt_text: ALTIS ALTIS
+vlm_output: 2017
+
+----------------------------
+
+<think>
+Okay, let's break this down. The ground truth is "ALTIS ALTIS", which has two instances of the word "ALTIS". The VLM OCR output is "2017". 
+
+First, Step 1 says to extract the text content from the OCR output, which is "2017". Then, Step 2 involves comparing this with the ground truth. The rules mention that word order doesn't matter, so we don't have to check the sequence. We need to compare based on the set of unique words in the ground truth. The ground truth's unique words are just "ALTIS" (since it's repeated, but unique counts as one).
+
+Next, the comparison should ignore capitalization, punctuation, and extra/missing spaces. The OCR output is "2017", which is numbers, not the word "ALTIS". Also, the problem states that small typos still count as matches, but in this case, there's no typo—there's a complete mismatch. The OCR output has numbers, which are not related to the word "ALTIS" at all. 
+
+Since the OCR output doesn't contain any of the unique words from the ground truth ("ALTIS"), it falls under category 3. Even though there are two words in the ground truth, the OCR output has none of them. So the answer should be 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 121
+2. Slightly Correct Num: 56
+3. Incorrect Num: 312

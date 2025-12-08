@@ -1,0 +1,24 @@
+img id: sa_960328_crop_1
+
+gt_text: 5809
+vlm_output: AirEuropa
+
+----------------------------
+
+<think>
+Okay, let's break this down. The ground truth text is "5809", and the VLM OCR output is "AirEuropa". 
+
+First, Step 1 says to extract the text content from the OCR output. So that's "AirEuropa".
+
+Step 2 involves comparing this extracted text with the ground truth. The rules are: word order doesn't matter, compare based on unique words in the ground truth, ignore case, punctuation, spaces, and small typos. But here's the thing: the ground truth is "5809", which is a number. The OCR output is "AirEuropa", which is a proper noun, a company name.
+
+Now, looking at the categories. Category 1 is correct if all unique ground truth words are in the OCR output. But the ground truth here is "5809"—a four-digit number. The OCR output has "AirEuropa", which is a word, not a number. So there's no overlap in words. The unique words in the ground truth are just "5809" (assuming numbers are considered words here). But "AirEuropa" doesn't contain that number. 
+
+Category 2 is if at least one but not all unique words match. But since the ground truth has only one unique word, and the OCR output doesn't have that, there's no match. 
+
+Category 3 is incorrect if no words match or the output is unrelated. Since "AirEuropa" is unrelated to "5809", which is a number, and there are no matching words, it's category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 184
+2. Slightly Correct Num: 91
+3. Incorrect Num: 503

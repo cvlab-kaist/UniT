@@ -1,0 +1,49 @@
+img id: sa_922282_crop_0
+
+gt_text: SALMIA Ekonomi EXECUTIVE SUPER Non AC www.laksanabus.com SEAT SEAT 2-1 2-1 www.laksanabus.
+vlm_output: The text in the image reads "SALMA".
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The user wants me to determine the category (1, 2, or 3) based on the comparison between the ground truth text and the VLM OCR output. 
+
+First, I need to extract the text content from the VLM OCR output. The OCR output says, "The text in the image reads 'SALMA'." So the extracted text here is "SALMA".
+
+Next, I have to compare this with the ground truth text: "SALMIA Ekonomi EXECUTIVE SUPER Non AC www.laksanabus.com SEAT SEAT 2-1 2-1 www.laksanabus." 
+
+The instructions mention that word order doesn't matter. Also, I should compare based only on the set of unique words in the ground truth. Let me list out the unique words from the ground truth. Breaking it down:
+
+- SALMIA
+- Ekonomi
+- EXECUTIVE
+- SUPER
+- Non
+- AC
+- www.laksanabus.com
+- SEAT
+- 2-1
+- (Note: "www.laksanabus.com" appears twice, but as a unique word, it's counted once.)
+
+Now, the OCR output is "SALMA". Let's check if any of the ground truth words are present in the OCR output, considering the rules:
+
+- Ignore capitalization: "SALMA" vs "SALMIA" – these are similar but not exact. The user mentioned small typos still count as matches. "SALMA" vs "SALMIA" – the difference is the 'I' vs 'A' at the end. Is that considered a small typo? It might depend, but since the instruction says small typos count, maybe "SALMA" is considered a typo of "SALMIA". However, "SALMA" is missing the 'I' and has an extra 'A' compared to "SALMIA". Wait, "SALMIA" is spelled S-A-L-M-I-A, while "SALMA" is S-A-L-M-A. So the OCR output is missing the 'I' and has an extra 'A'? Or is it that the OCR output has "SALMA" which is S-A-L-M-A, whereas the ground truth is "SALMIA" which is S-A-L-M-I-A. The difference is the 'I' versus 'A' in the fifth position. That's a single character difference. So maybe that's considered a small typo. 
+
+If "SALMA" is considered a typo of "SALMIA", then that's a match. However, the other words in the ground truth (Ekonomi, EXECUTIVE, SUPER, etc.) are not present in the OCR output. The OCR output only has "SALMA".
+
+The instructions say that category 1 is when all unique ground truth words appear in the OCR output. But here, the OCR output only has one word that might be a typo of one of the ground truth words. The rest of the ground truth words (Ekonomi, EXECUTIVE, etc.) are not present. Therefore, even if "SALMA" is considered a match for "SALMIA", the other words are missing. 
+
+So category 1 requires all unique ground truth words to be present. Since the OCR output only has one matching word (assuming "SALMA" is a typo of "SALMIA"), and the rest are not present, that would be category 2 (partially correct). 
+
+Wait, but the ground truth has multiple unique words. The OCR output only matches one of them. So category 2 is "at least one but not all unique words match." Therefore, the answer should be category 2. 
+
+But I need to confirm if "SALMA" is considered a match for "SALMIA". The instruction says small typos still count as matches. The difference here is a single letter (I vs A). Depending on interpretation, that could be a small typo. However, if the OCR output is "SALMA" and the ground truth is "SALMIA", the OCR is missing the 'I' and adding an 'A' at the end. Wait, "SALMIA" is six letters: S-A-L-M-I-A. "SALMA" is five letters: S-A-L-M-A. So the OCR is missing the 'I' and has an extra 'A'? Or is it that the OCR has "SALMA" which is S-A-L-M-A, and the ground truth is S-A-L-M-I-A. So the OCR is missing the 'I' and has an 'A' instead. That's a substitution of 'I' with 'A' in the fifth position. That's a single character substitution, so a small typo. Therefore, "SALMA" would be considered a match for "SALMIA". 
+
+In that case, the OCR output has one matching word (SALMIA, as SALMA is a typo). The other words (Ekonomi, EXECUTIVE, etc.) are not present. So the OCR output has at least one unique ground truth word (assuming SALMA is a typo of SALMIA). Therefore, it's category 2. 
+
+But if the OCR output doesn't have any of the other words, then even though SALMA is a typo of SALMIA, the other words are missing. So the answer is 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 142
+2. Slightly Correct Num: 60
+3. Incorrect Num: 350

@@ -1,0 +1,26 @@
+img id: sa_883801_crop_1
+
+gt_text: MIRA
+vlm_output: VIVA
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "MIRA" and the VLM OCR output is "VIVA". I need to compare these two according to the steps given.
+
+First, extract the text from the OCR output. That's straightforward, it's "VIVA".
+
+Next, compare with the ground truth. The steps say to consider word order doesn't matter, so I don't have to check the order. Then, compare based on the set of unique words in the ground truth. The ground truth is "MIRA", which is one word. The OCR output is "VIVA", which is also one word. 
+
+Now, ignore capitalization, punctuation, and spaces. Both are uppercase, so that's fine. No punctuation or spaces to worry about here. 
+
+Check for typos. The ground truth is "MIRA" and the OCR output is "VIVA". The letters are different. Let me think about typos. Are "MIRA" and "VIVA" considered similar? Well, "MIRA" has M, I, R, A. "VIVA" has V, I, V, A. The letters I and A are common. But the other letters are different. The problem says small typos still count as matches. But in this case, the words are completely different. So maybe there's no match here.
+
+The categories are: 1 if all unique ground truth words are present (ignoring order, case, spacing, typos). Since the ground truth has "MIRA" and the OCR has "VIVA", there's no match. So category 3 would be if no words match. But wait, the ground truth has one word, and the OCR output has another. So no overlap. Therefore, it's category 3: incorrect. 
+
+But wait, the instructions say to compare based on the set of unique words in the ground truth. The ground truth's unique words are {"MIRA"}. The OCR output's unique words are {"VIVA"}. So no intersection. Hence, category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 103
+2. Slightly Correct Num: 0
+3. Incorrect Num: 222

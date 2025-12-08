@@ -1,0 +1,32 @@
+img id: sa_922282_crop_0
+
+gt_text: SALMIA Ekonomi EXECUTIVE SUPER Non AC www.laksanabus.com SEAT SEAT 2-1 2-1 www.laksanabus.
+vlm_output: SALMA
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. So, the ground truth text is "SALMIA Ekonomi EXECUTIVE SUPER Non AC www.laksanabus.com SEAT SEAT 2-1 2-1 www.laksanabus." and the OCR output is "SALMA". The task is to determine which category (1, 2, or 3) this falls into based on the given criteria.
+
+First, I need to extract the text content from the OCR output. The OCR output here is just "SALMA". Now, comparing that to the ground truth. The ground truth has several words: SALMIA, Ekonomi, EXECUTIVE, SUPER, Non, AC, www.laksanabus.com, SEAT, 2-1, and another www.laksanabus. But the OCR output only has "SALMA".
+
+Next, the instructions say to compare based on the set of unique words in the ground truth. Let's list those unique words (case-insensitive, ignoring punctuation and spacing). So, the unique words from the ground truth would be: salmia, ekonomi, executive, super, non, ac, www.laksanabus.com, seat, 2-1. Note that "SEAT" appears twice but is considered once as a unique word.
+
+Now, the OCR output is "SALMA". Let's check if any of the ground truth words are present here. The OCR output has "SALMA" which is similar to "SALMIA" in the ground truth. The difference is the 'I' vs 'MA' at the end. The problem states that small typos still count as matches. So "SALMA" vs "SALMIA" – the typo here is the last two letters. Depending on how strict the typo check is, but the instruction says small typos count as matches. So maybe this counts as a match for "SALMIA".
+
+But wait, the OCR output only has "SALMA" and nothing else. The ground truth has multiple unique words, but the OCR output only has one. According to the categories, category 1 is when all unique ground truth words appear in the OCR output. But here, only one word (SALMIA) is matched, but the rest (ekonomi, executive, etc.) are not present. So category 1 requires all unique words to be present, which isn't the case here.
+
+Category 2 is if at least one but not all unique words match. Since "SALMA" matches "SALMIA" (assuming that's considered a small typo), then that's one match. The rest of the words in the ground truth are not present in the OCR output. So category 2 would be appropriate here.
+
+But wait, the OCR output only has "SALMA" and nothing else. The ground truth has multiple words. So the OCR output has only one word that partially matches one of the ground truth words. So according to the criteria, since at least one word matches, it's category 2. However, if the OCR output had more words that matched others, but in this case, it's only one. So category 2.
+
+But let me check again. The problem says "unique words in the ground truth". The ground truth has 9 unique words (as listed above). The OCR output has one word, "SALMA", which matches "SALMIA" with a typo. So one match. Therefore, category 2 is "at least one but not all unique words match". So the answer should be 2.
+
+Wait, but the user instructions say "small typos still count as matches". So "SALMA" vs "SALMIA" – is that considered a small typo? The difference is the last two letters. "SALMIA" has 'IA' at the end, while "SALMA" has 'MA'. That's a two-letter difference. Depending on the definition of "small", but the problem says small typos count. So maybe this is considered a match. Therefore, one match. So category 2.
+
+But if the OCR output had "SALMIA" exactly, then it would be a match. But since it's "SALMA", which is a typo, but still considered a match, then one match. Therefore, category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 139
+2. Slightly Correct Num: 63
+3. Incorrect Num: 350

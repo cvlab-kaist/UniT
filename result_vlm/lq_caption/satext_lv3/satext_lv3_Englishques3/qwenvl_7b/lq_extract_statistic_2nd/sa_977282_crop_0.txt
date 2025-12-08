@@ -1,0 +1,32 @@
+img id: sa_977282_crop_0
+
+gt_text: EMBRAER LND 195 SP
+vlm_output: The visible English word in the image is:"Airbus"This appears to be part of an Airbus logo or branding on the aircraft.
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked here. The user provided a ground truth text and an OCR output from a VLM. They want me to categorize the OCR output into one of three categories based on how well it matches the ground truth.
+
+The ground truth is "EMBRAER LND 195 SP". The OCR output says: "The visible English word in the image is: 'Airbus' This appears to be part of an Airbus logo or branding on the aircraft." 
+
+Step 1 is to extract the text content from the OCR output. So, I need to ignore any surrounding text and just take the actual words that are part of the OCR result. The OCR output mentions "Airbus" and then talks about it being part of an Airbus logo. But the ground truth has "EMBRAER", "LND", "195", and "SP". 
+
+Now, step 2 is comparing the extracted text with the ground truth with specific rules. The key points are: word order doesn't matter, compare only the unique words in the ground truth, ignore case, punctuation, spaces, and small typos. 
+
+Let me break down the ground truth words. The unique words here are "EMBRAER", "LND", "195", "SP". Wait, but "LND" might be an abbreviation, maybe "Landing"? But the problem says to compare based on the set of unique words in the ground truth. So regardless of what they mean, we take them as they are. 
+
+The OCR output's extracted text is "Airbus" and mentions Airbus again. So the OCR output has the word "Airbus" twice, but the ground truth doesn't have "Airbus" at all. The ground truth words are EMBRAER, LND, 195, SP. None of these are present in the OCR output. 
+
+But wait, the user says to compare based only on the set of unique words in the ground truth. So the OCR output needs to have at least those words. However, the OCR output has "Airbus", which isn't in the ground truth. So there's no overlap. 
+
+So according to the categories: category 1 is if all unique ground truth words are present. Here, none are present. Category 2 is if at least one but not all match. But in this case, none match. So that would be category 3: incorrect. 
+
+But wait, maybe I'm missing something. The OCR output says "visible English word is Airbus". The ground truth has "EMBRAER" which is a Brazilian aircraft manufacturer. So the OCR output is detecting "Airbus" instead of "EMBRAER". Since the ground truth has "EMBRAER", which is a proper noun, and the OCR output got "Airbus", which is another aircraft manufacturer. So there's no match here. 
+
+Therefore, the OCR output doesn't contain any of the ground truth words. Hence, it's category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 206
+2. Slightly Correct Num: 108
+3. Incorrect Num: 560

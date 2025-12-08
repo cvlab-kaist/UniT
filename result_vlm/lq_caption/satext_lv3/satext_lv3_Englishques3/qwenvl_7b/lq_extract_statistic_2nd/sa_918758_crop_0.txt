@@ -1,0 +1,28 @@
+img id: sa_918758_crop_0
+
+gt_text: ADELAIDE CONVENTION CENTRE
+vlm_output: AIR LASE CONVENTION CENTER
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "ADELAIDE CONVENTION CENTRE" and the VLM OCR output is "AIR LASE CONVENTION CENTER". 
+
+First, I need to extract the text from the OCR output, which is already given as "AIR LASE CONVENTION CENTER". 
+
+Now, comparing the two. Let's break them down into words. Ground truth has three words: ADELAIDE, CONVENTION, CENTRE. The OCR output has four words: AIR, LASE, CONVENTION, CENTER.
+
+The instructions say to compare based on the set of unique words in the ground truth. So, the unique words in the ground truth are ADELAIDE, CONVENTION, CENTRE. Now, I need to check if any of these words appear in the OCR output, considering case, typos, etc.
+
+Looking at the OCR output: "AIR" doesn't match any ground truth word. "LASE" is not a match. "CONVENTION" matches exactly (ignoring case, but both are uppercase here). "CENTER" is a variant of "CENTRE". The ground truth has "CENTRE" (with an 'E' at the end), and the OCR has "CENTER" (with an 'ER' at the end). The instruction says small typos still count as matches. So "CENTER" vs "CENTRE" would be considered a match here, since they are similar with a typo.
+
+So the OCR output has "CONVENTION" and "CENTER" which correspond to two of the three ground truth words. But the third word in the ground truth is "ADELAIDE", which is not present in the OCR output. The OCR has "AIR" and "LASE" which are not part of the ground truth.
+
+So according to the categories: category 1 requires all unique ground truth words to be present. Here, only two out of three are present. So that's not category 1. Category 2 is if at least one but not all match. Wait, but the ground truth has three unique words. The OCR output has two matches (CONVENTION and CENTER). So that's two out of three. But the category 2 says "at least one but not all". So if two are matched, that's more than one but not all. So that would be category 2.
+
+Wait, but the instruction says "unique words in the ground truth". The ground truth has three unique words. The OCR output has two of them. So that's partially correct. Therefore, category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 125
+2. Slightly Correct Num: 64
+3. Incorrect Num: 339

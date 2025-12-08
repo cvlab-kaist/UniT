@@ -1,0 +1,24 @@
+img id: sa_965829_crop_1
+
+gt_text: Only taxi
+vlm_output: Only
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "Only taxi", and the VLM OCR output is "Only". 
+
+First, I need to extract the text content from the OCR output, which is straightforward here—it's just "Only".
+
+Next, comparing the extracted text with the ground truth. The instructions say to consider word order doesn't matter, so that's not an issue here. The unique words in the ground truth are "Only" and "taxi". The OCR output has "Only" but is missing "taxi". 
+
+Now, the categories: Category 1 requires all unique ground truth words to be present in the OCR output. Since "taxi" is missing, that's not met. Category 2 is for at least one but not all words matching. Here, "Only" is present, but "taxi" isn't. So that would be partially correct. Category 3 is if no words match or it's unrelated. But since "Only" is present, it's not category 3.
+
+Wait, but the OCR output has only one word, "Only", while the ground truth has two. So the OCR output has one of the two words. So according to the criteria, that's at least one but not all. Therefore, category 2. 
+
+But wait, the problem says "unique words in the ground truth". The ground truth has two unique words: "Only" and "taxi". The OCR output has "Only" as the only word. So one of the two unique words is present. Therefore, it's category 2—partially correct.
+</think>
+LLM classification result: 2
+1. Correct Num: 192
+2. Slightly Correct Num: 94
+3. Incorrect Num: 518

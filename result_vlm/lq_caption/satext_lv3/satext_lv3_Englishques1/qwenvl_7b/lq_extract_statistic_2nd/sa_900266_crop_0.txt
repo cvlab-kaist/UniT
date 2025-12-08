@@ -1,0 +1,26 @@
+img id: sa_900266_crop_0
+
+gt_text: CHINA EASTERN EASTERN
+vlm_output: CHINA EASTERN
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem. The ground truth text is "CHINA EASTERN EASTERN" and the VLM OCR output is "CHINA EASTERN". 
+
+First, I need to follow the steps given. Step 1 is to extract the text content from the OCR output, which is already done here as "CHINA EASTERN".
+
+Step 2 involves comparing the extracted text with the ground truth. The rules are that word order doesn't matter, we only consider the set of unique words in the ground truth. Also, ignore capitalization, punctuation, spaces, and small typos. But typos still count as matches if they're small.
+
+So, the ground truth has the words "CHINA" and "EASTERN" (since "EASTERN" is repeated, but we take unique words). The OCR output has "CHINA" and "EASTERN". 
+
+Looking at the unique words: both have "CHINA" and "EASTERN". The OCR output has both words present, even though the ground truth has "EASTERN" twice. But since we're only considering unique words, the count doesn't matter. Also, the OCR output has the same words as the ground truth, just once each. 
+
+No typos here. The capitalization is the same. So all unique ground truth words are present in the OCR output. Therefore, according to category 1, it's correct. 
+
+Wait, but the ground truth has "EASTERN" twice. But the problem says to compare based only on the set of unique words in the ground truth. So even if the OCR output has fewer instances, as long as all unique words are present, it's okay. So "CHINA" and "EASTERN" are both in the OCR output. So that's category 1.
+</think>
+LLM classification result: 1
+1. Correct Num: 104
+2. Slightly Correct Num: 47
+3. Incorrect Num: 274

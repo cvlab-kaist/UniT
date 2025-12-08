@@ -1,0 +1,26 @@
+img id: sa_905260_crop_0
+
+gt_text: MARIEN APOTHEKE
+vlm_output: MANN APOTHEKE
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "MARIEN APOTHEKE" and the OCR output is "MANN APOTHEKE". 
+
+First, I need to extract the text from the OCR output, which is straightforward here—it's "MANN APOTHEKE". 
+
+Next, comparing the extracted text with the ground truth. The instructions say to consider word order doesn't matter, so I can ignore the sequence. Also, I should compare based only on the unique words in the ground truth. The ground truth has two words: "MARIEN" and "APOTHEKE". 
+
+Now, checking if these words are present in the OCR output. The OCR output has "MANN" and "APOTHEKE". The word "APOTHEKE" matches exactly in both, so that's a match. However, "MARIEN" vs. "MANN"—these are different. But the instructions mention that small typos still count as matches. Wait, "MARIEN" and "MANN" aren't really typos of each other. "MANN" is a different word entirely (meaning "man" in German), whereas "MARIEN" could be a name or a variation. Since the OCR output has "MANN" instead of "MARIEN", that's a substitution, not a typo. The problem says small typos count, but here the words are different. So "MANN" isn't a typo of "MARIEN", so that's a mismatch.
+
+So the ground truth has two unique words: "MARIEN" and "APOTHEKE". The OCR output has "MANN" and "APOTHEKE". Only "APOTHEKE" matches. Therefore, only one of the two unique ground truth words is present in the OCR output. 
+
+According to the categories: Category 1 is if all unique ground truth words are present. Here, only one matches. Category 2 is if at least one but not all match. So this would be Category 2. 
+
+Wait, but the problem says "small typos still count as matches." However, "MANN" vs. "MARIEN" isn't a typo. A typo might be like "MARIEN" vs. "MAREN" or "MARIN", but "MANN" is a different word. So I think that's not considered a typo here. Therefore, the OCR output has one correct word ("APOTHEKE") and one incorrect ("MANN"). Since the ground truth has two unique words, and only one is matched, the answer is Category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 109
+2. Slightly Correct Num: 53
+3. Incorrect Num: 290

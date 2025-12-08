@@ -1,0 +1,28 @@
+img id: sa_991908_crop_0
+
+gt_text: ONE
+vlm_output: 400
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "ONE" and the VLM OCR output is "400". I need to figure out which category this falls into.
+
+First, step 1 is to extract the text content from the OCR output. The OCR output here is "400", which is just numbers. The ground truth is "ONE", which is a word. 
+
+Now step 2: compare the extracted text with the ground truth. The instructions say word order doesn't matter, but we need to check if the unique words from the ground truth are present in the OCR output. The ground truth has one unique word: "ONE". The OCR output is "400", which is numbers. 
+
+But wait, the problem mentions considering typos, but here it's not a typo. The OCR output is entirely different. The ground truth is a word, and the OCR output is numbers. So there's no match in terms of words. The OCR output doesn't have the word "ONE" or any variation of it. 
+
+The categories are: 1 if all unique ground truth words are present (ignoring order, case, spacing, typos). Here, the OCR output has no words matching "ONE". So it's not category 1. 
+
+Category 2 is if at least one but not all unique words match. But there's only one unique word in the ground truth, and it's not present. So category 2 doesn't apply. 
+
+Category 3 is if no words match or the output is unrelated. Since "400" is unrelated to "ONE" and there's no match, it should be category 3. 
+
+I think the answer is 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 289
+2. Slightly Correct Num: 1
+3. Incorrect Num: 662

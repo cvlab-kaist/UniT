@@ -1,0 +1,30 @@
+img id: sa_907067_crop_1
+
+gt_text: WWW.CITYCRUISES.COM
+vlm_output: WATERFRONTLONDON
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "WWW.CITYCRUISES.COM" and the VLM OCR output is "WATERFRONTLONDON". 
+
+First, I need to extract the text content from the OCR output. The OCR output here is "WATERFRONTLONDON". Then, I have to compare this with the ground truth, which is "WWW.CITYCRUISES.COM".
+
+The instructions say that word order doesn't matter. Also, we should compare based only on the set of unique words in the ground truth. Wait, the ground truth is "WWW.CITYCRUISES.COM". Let me parse that. The ground truth has two words: "WWW" and "CITYCRUISES.COM"? Or is it considered as one word? Hmm, maybe the ground truth is a single word with a domain name, so "WWW.CITYCRUISES.COM" is one word. But the OCR output is "WATERFRONTLONDON", which is two words: "WATERFRONT" and "LONDON".
+
+But the problem says to compare based only on the set of unique words in the ground truth. Wait, the ground truth is "WWW.CITYCRUISES.COM". If we split into words, maybe it's "WWW", "CITYCRUISES", "COM"? But that's probably not. Alternatively, maybe the ground truth is considered as one word: "WWW.CITYCRUISES.COM" because it's a URL. Similarly, the OCR output is "WATERFRONTLONDON", which is one word. But the instructions mention "unique words", so maybe splitting on spaces. However, in the ground truth, there are no spaces. So maybe the unique words in the ground truth are just one word: "WWW.CITYCRUISES.COM".
+
+Wait, but the problem says "the set of unique words in the ground truth". So if the ground truth is a single word (no spaces), then the set has one word. The OCR output is "WATERFRONTLONDON", which is also a single word. So we need to check if that single word in the OCR output matches the ground truth word, considering the rules.
+
+The rules: ignore order (but there's only one word each), ignore case, punctuation, and extra/missing spaces. Also, small typos count as matches. Wait, but the ground truth has a domain name with periods and the OCR output has no periods. So comparing "WATERFRONTLONDON" to "WWW.CITYCRUISES.COM". Are there any common words here? Let me check.
+
+The ground truth word is "WWW.CITYCRUISES.COM". The OCR output is "WATERFRONTLONDON". Do these have any common words? Let's see: "CITYCRUISES" vs "WATERFRONTLONDON". No obvious matches. But maybe splitting into parts? The ground truth has "CITYCRUISES" and "WWW", "COM". The OCR output has "WATERFRONT" and "LONDON". But if we consider that the ground truth's unique words are "WWW", "CITYCRUISES", and "COM", but the OCR output has "WATERFRONT" and "LONDON". None of these words are present. So no matches. Therefore, the category would be 3: Incorrect.
+
+Wait, but the problem says "unique words in the ground truth". If the ground truth is considered as one word, then the OCR output's word doesn't match. But maybe the ground truth is split into words based on periods? Like "WWW", "CITYCRUISES", "COM". Then the OCR output has "WATERFRONTLONDON" which is one word. But none of the ground truth's words are present in the OCR output. So no matches. Hence, category 3.
+
+Alternatively, maybe the OCR output is considered as two words, but the ground truth is one. But the instructions say to compare based on the set of unique words in the ground truth. If the ground truth has one unique word, then the OCR output's words must match that. But they don't. So category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 110
+2. Slightly Correct Num: 57
+3. Incorrect Num: 298

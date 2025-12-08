@@ -1,0 +1,30 @@
+img id: sa_984480_crop_1
+
+gt_text: HOTEL VILLE DE
+vlm_output: BIBLIOTHEQUE DE LA MUNICIPALITE
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "HOTEL VILLE DE" and the OCR output is "BIBLIOTHEQUE DE LA MUNICIPALITE". The task is to compare these two texts based on specific criteria.
+
+First, I need to extract the text from the OCR output. That's straightforward—it's "BIBLIOTHEQUE DE LA MUNICIPALITE". Now, I have to compare this with the ground truth, considering the given rules.
+
+The key points are:
+- Word order doesn't matter.
+- Only the unique words in the ground truth are considered.
+- Ignore case, punctuation, and spacing.
+- Small typos still count as matches.
+
+So, the ground truth words are "HOTEL", "VILLE", and "DE". Let's process each of these against the OCR output.
+
+First, convert everything to lowercase to ignore case. Ground truth words become "hotel", "ville", "de". OCR output words are "bibliothèque", "de", "la", "municipalité".
+
+Now, check if any of the ground truth words are present in the OCR output. "DE" is present in both. The other words are "HOTEL" and "VILLE" in the ground truth. The OCR output has "bibliothèque" and "municipalité", which don't match "hotel" or "ville" even with typos. "Bibliothèque" is a different word from "hotel" or "ville", and "municipalité" is different from "ville" as well. "La" is in the OCR output but isn't part of the ground truth.
+
+So, only "de" matches. The other two words from the ground truth are not present in the OCR output. According to the categories, if at least one but not all unique words match, it's category 2. Since only one out of three words matches, the answer should be 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 217
+2. Slightly Correct Num: 104
+3. Incorrect Num: 586

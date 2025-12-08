@@ -1,0 +1,22 @@
+img id: sa_927645_crop_1
+
+gt_text: WELCOME IOS TO RAVEL TICKETS
+vlm_output: WELCOME TO GIBS
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "WELCOME IOS TO RAVEL TICKETS" and the VLM OCR output is "WELCOME TO GIBS". 
+
+First, I need to extract the text from the OCR output, which is already given as "WELCOME TO GIBS". Then, compare it with the ground truth. The instructions say to ignore word order, so I should look at the set of words in each.
+
+Ground truth words are: WELCOME, IOS, TO, RAVEL, TICKETS. But the OCR output has WELCOME, TO, GIBS. 
+
+Now, checking which words from the ground truth are present. "WELCOME" and "TO" are in both. The other words in the ground truth are IOS, RAVEL, TICKETS, which are not in the OCR output. The OCR has "GIBS" which isn't in the ground truth. 
+
+The category is based on whether all unique ground truth words are present. Since only two out of five are present, that's not all. But the category 1 is for all unique words. So this would be category 2, slightly correct because at least one (actually two) words match, but not all. Even though there's a typo in "GIBS" instead of maybe "RAVEL" or something, but the problem says small typos still count as matches. Wait, but "GIBS" isn't a typo of any ground truth word. The ground truth has "RAVEL" and "TICKETS", so "GIBS" is a different word. So the OCR output has two correct words (WELCOME and TO) and one incorrect word (GIBS). Since the unique words in the ground truth are five, but only two are matched. So category 2, partially correct.
+</think>
+LLM classification result: 2
+1. Correct Num: 139
+2. Slightly Correct Num: 73
+3. Incorrect Num: 378

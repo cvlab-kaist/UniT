@@ -1,0 +1,146 @@
+img id: sa_837889_crop_0
+
+gt_text: Infinity SESAME Stadium Shamu Nautilus Falls STREET Theater Mako® Encounter Shark
+vlm_output: SESAME STREETShamu StadiumInfinity FallsMaker & Free ResourcesNautilus Theater
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked. The user provided a ground truth text and a VLM OCR output. My job is to compare them based on specific criteria and assign a category (1, 2, or 3).
+
+Starting with Step 1: Extract the text content from the VLM OCR output. The OCR output given is "SESAME STREETShamu StadiumInfinity FallsMaker & Free ResourcesNautilus Theater". Let me note that down. The ground truth is "Infinity SESAME Stadium Shamu Nautilus Falls STREET Theater Mako® Encounter Shark".
+
+Now, Step 2 is the comparison. The key points here are that word order doesn't matter, we only look at the unique words in the ground truth, ignore case, punctuation, spaces, and small typos. So I need to process both texts accordingly.
+
+First, let's list the unique words from the ground truth. The ground truth text is: "Infinity SESAME Stadium Shamu Nautilus Falls STREET Theater Mako® Encounter Shark". Breaking this down into individual words, considering that "Mako®" has a symbol but the instruction says to ignore punctuation. So maybe "Mako" is the word here. Also, "Encounter" and "Shark" are separate. Let me list them:
+
+Ground truth unique words (case-insensitive, ignoring punctuation):
+- Infinity
+- Sesame
+- Stadium
+- Shamu
+- Nautilus
+- Falls
+- Street
+- Theater
+- Mako
+- Encounter
+- Shark
+
+Now, the OCR output is "SESAME STREETShamu StadiumInfinity FallsMaker & Free ResourcesNautilus Theater". Let's process this. Again, ignoring case and punctuation, and splitting into words. The OCR text has:
+
+- SESAME (which is "Sesame")
+- STREETShamu (this seems like a typo; maybe "STREET" and "Shamu" are separate? But the OCR might have merged them. However, the instruction says to ignore extra spaces, so maybe "STREETShamu" is considered as "STREET" and "Shamu"? Wait, but the original OCR output might have merged them. Let me check the original OCR again: "SESAME STREETShamu StadiumInfinity FallsMaker & Free ResourcesNautilus Theater". So it's "STREETShamu" without a space. But the instruction says to ignore extra/missing spaces. So maybe "STREET" and "Shamu" are considered as separate words here? Or is "STREETShamu" considered as one word? Hmm, this is a bit tricky. But the problem says to ignore extra/missing spaces, so perhaps we should split them into individual words as best as possible. Let's try splitting by spaces, but considering that some words might be merged. Alternatively, maybe the OCR output has "STREETShamu" as one word, but the ground truth has "STREET" and "Shamu" as separate. However, the instruction says that small typos still count as matches. So if "STREETShamu" is a typo, maybe it's considered as "STREET" and "Shamu" if they are part of the original. But I'm not sure. Let me think again.
+
+Alternatively, maybe the OCR output is split into words as:
+
+- SESAME
+- STREETShamu
+- Stadium
+- Infinity
+- Falls
+- Maker
+- Free
+- Resources
+- Nautilus
+- Theater
+
+But "STREETShamu" is one word. However, the ground truth has "STREET" and "Shamu" as separate words. So in this case, "STREETShamu" would not match either "STREET" or "Shamu" exactly. But the instruction says that small typos still count as matches. However, "STREETShamu" is not a small typo of either; it's a merged word. So perhaps that's a problem. But maybe the OCR output actually has "STREET" and "Shamu" as separate words but they got merged in the OCR. But the problem says to ignore extra/missing spaces. So if the OCR output has "STREETShamu" but the correct is "STREET Shamu", then maybe we should split them. However, the instruction says to ignore extra/missing spaces, so perhaps "STREETShamu" is considered as "STREET" and "Shamu" even if they are merged. Wait, but splitting into words when there's no space is tricky. Maybe the OCR output's text is "SESAME STREETShamu StadiumInfinity FallsMaker & Free ResourcesNautilus Theater". So splitting by spaces, the words would be:
+
+1. SESAME
+2. STREETShamu
+3. StadiumInfinity
+4. FallsMaker
+5. & 
+6. Free
+7. ResourcesNautilus
+8. Theater
+
+But that seems like a lot of merged words. However, the problem says to ignore extra/missing spaces, so maybe we should split them into individual words as best as possible. For example, "STREETShamu" could be "STREET" and "Shamu", "StadiumInfinity" could be "Stadium" and "Infinity", "FallsMaker" as "Falls" and "Maker", "ResourcesNautilus" as "Resources" and "Nautilus".
+
+If we do that, then the OCR output words would be:
+
+- SESAME
+- STREET
+- Shamu
+- Stadium
+- Infinity
+- Falls
+- Maker
+- Free
+- Resources
+- Nautilus
+- Theater
+
+Now, comparing this to the ground truth unique words:
+
+Ground truth words:
+- Infinity
+- Sesame
+- Stadium
+- Shamu
+- Nautilus
+- Falls
+- Street
+- Theater
+- Mako
+- Encounter
+- Shark
+
+OCR words after splitting:
+- Sesame (matches "Sesame")
+- Street (matches "Street")
+- Shamu (matches "Shamu")
+- Stadium (matches "Stadium")
+- Infinity (matches "Infinity")
+- Falls (matches "Falls")
+- Maker (doesn't match any ground truth word)
+- Free (no match)
+- Resources (no match)
+- Nautilus (matches "Nautilus")
+- Theater (matches "Theater")
+
+So the matches here are: Sesame, Street, Shamu, Stadium, Infinity, Falls, Nautilus, Theater. That's 8 out of the 11 ground truth words. The missing ones are Mako, Encounter, Shark. But wait, the ground truth has "Mako®" which is "Mako" (ignoring the symbol), and "Encounter" and "Shark".
+
+In the OCR output, there's "Maker" instead of "Mako". Is "Maker" considered a typo of "Mako"? The instruction says small typos still count as matches. "Maker" vs "Mako" – that's a difference in the second and third letters. "Mak" vs "Mak" with an 'e' and 'r' vs 'o'? Wait, "Mako" is M-A-K-O, and "Maker" is M-A-K-E-R. So it's not a small typo. The first three letters are the same, but then it diverges. Maybe that's considered a typo? But the instruction says small typos, so maybe not. Alternatively, maybe the OCR output has "Mako" but it's written as "Maker" due to OCR error. But the user says to consider small typos as matches. However, "Maker" is not a small typo of "Mako"; it's a different word. So that might not count. Similarly, "Encounter" and "Shark" are not present in the OCR output.
+
+So in the OCR output, we have 8 matches (Sesame, Street, Shamu, Stadium, Infinity, Falls, Nautilus, Theater). The ground truth has 11 unique words. So the OCR output has 8 out of 11. But according to the categories:
+
+1 — Correct: all unique ground truth words appear in the OCR output. Here, it's not the case.
+
+2 — Slightly correct: at least one but not all unique words match. Here, 8 out of 11, which is more than one but not all. So this would be category 2.
+
+Wait, but the problem says "based only on the set of unique words in the ground truth". So the OCR output needs to have all the unique words from the ground truth, but the OCR may have extra words. But the instruction says to compare based on the set of unique words in the ground truth. So if the OCR output has all the ground truth words, even with extra words, it's category 1. If it has some, then category 2. If none, category 3.
+
+In this case, the OCR output has 8 out of 11 ground truth words. So that's more than one, but not all. Therefore, it's category 2.
+
+But wait, let me check again. The ground truth unique words are:
+
+Infinity, Sesame, Stadium, Shamu, Nautilus, Falls, Street, Theater, Mako, Encounter, Shark.
+
+OCR output words after processing (assuming splitting merged words):
+
+Sesame, Street, Shamu, Stadium, Infinity, Falls, Nautilus, Theater, Maker, Free, Resources.
+
+So the OCR has:
+
+- Sesame (match)
+- Street (match)
+- Shamu (match)
+- Stadium (match)
+- Infinity (match)
+- Falls (match)
+- Nautilus (match)
+- Theater (match)
+- Maker (no match)
+- Free (no match)
+- Resources (no match)
+
+So 8 matches out of 11. Therefore, it's partially correct, so category 2.
+
+But wait, the instruction says "based only on the set of unique words in the ground truth". So the OCR output must include all of those words. If it's missing any, then it's not category 1. Since the OCR is missing Mako, Encounter, Shark, it's not category 1. Hence, category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 20
+2. Slightly Correct Num: 6
+3. Incorrect Num: 34

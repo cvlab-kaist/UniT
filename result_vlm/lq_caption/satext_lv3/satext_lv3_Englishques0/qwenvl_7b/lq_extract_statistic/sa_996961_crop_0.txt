@@ -1,0 +1,22 @@
+img id: sa_996961_crop_0
+
+gt_text: House
+vlm_output: CANNONLouis Office BuildingDISTRICT 
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "House", and the VLM OCR output is "CANNONLouis Office BuildingDISTRICT ". 
+
+First, I need to extract the text content from the OCR output. The OCR output seems to have a few words: "CANNON", "Louis", "Office", "Building", "DISTRICT". Let me split them into individual words. But wait, "CANNONLouis" might be a typo or a single word. However, the instructions mention that small typos still count as matches, so maybe "CANNONLouis" could be considered as "Cannon Louis" if there's a space missing. But I need to check the exact words.
+
+The ground truth is "House", which is a single word. Now, the OCR output has multiple words. The unique words in the ground truth are just "House". The OCR output has "CANNON", "Louis", "Office", "Building", "DISTRICT". 
+
+Comparing each of these to "House", considering case insensitivity and typos. Let's see: "House" vs. "CANNON" – no match. "Louis" – no. "Office" – no. "Building" – no. "DISTRICT" – no. So none of the words in the OCR output match "House". 
+
+The category rules say: if all unique ground truth words are present, it's category 1. If at least one but not all, category 2. If none match or it's unrelated, category 3. Since there are no matches here, it should be category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 303
+2. Slightly Correct Num: 2
+3. Incorrect Num: 679

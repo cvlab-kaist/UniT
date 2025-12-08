@@ -1,0 +1,35 @@
+img id: sa_940115_crop_0
+
+gt_text: P P
+vlm_output: 1000
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. So, the ground truth text is "P P", and the VLM OCR output is "1000". The task is to compare these two based on specific criteria and assign a category (1, 2, or 3).
+
+First, I need to extract the text content from the OCR output. The OCR output here is "1000", which is just numbers. The ground truth is "P P", which are letters. 
+
+Next, the comparison rules. The key points are:
+
+- Word order doesn't matter.
+- Compare based only on the set of unique words in the ground truth.
+- Ignore capitalization, punctuation, and extra/missing spaces.
+- Small typos still count as matches.
+
+The categories are:
+
+1: All unique ground truth words are present in OCR output.
+2: At least one but not all match.
+3: None match or output is wrong/unrelated/empty.
+
+So, the ground truth has the unique word "P" (since it's repeated, but we consider unique words). The OCR output is "1000", which is numbers. 
+
+Now, checking if "P" is present in "1000". Since "1000" has digits, not letters, there's no "P" here. The OCR output doesn't have any letters, only numbers. So, the unique word from ground truth ("P") isn't present in the OCR output. 
+
+Therefore, according to the categories, since none of the unique ground truth words are present, it falls under category 3. Even though there's a possibility of typos, but in this case, the OCR output is entirely different (digits vs letters), so there's no match. Hence, the answer should be 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 160
+2. Slightly Correct Num: 79
+3. Incorrect Num: 433

@@ -1,0 +1,22 @@
+img id: sa_978607_crop_2
+
+gt_text: 1278
+vlm_output: 1947
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "1278" and the VLM OCR output is "1947". I need to compare them based on the given steps.
+
+First, extract the text content from the OCR output. Both are just numbers here. Then compare them considering that word order doesn't matter. But wait, the ground truth is a single number, "1278", and the OCR output is "1947". The unique words in the ground truth are just "1278", right? But since it's a number, maybe each digit is considered a separate word? Or is the entire number considered a single word?
+
+The instructions mention "unique words in the ground truth". If "1278" is considered as one word, then the OCR output "1947" has a different word. But if we split into digits, maybe each digit is a word. However, the problem says "based only on the set of unique words in the ground truth". So if the ground truth is a single word "1278", then the OCR output "1947" is a different word. So no match. But maybe the digits are considered as individual words? The instructions aren't clear on that.
+
+Wait, the example given in the categories: if the ground truth is "1278" and the OCR is "1947", the unique words in ground truth are just "1278", and the OCR output is "1947". So there's no match. Therefore, category 3: incorrect. But maybe the digits are considered as separate words? If that's the case, then the ground truth has digits 1,2,7,8. The OCR output has 1,9,4,7. So the digits 1 and 7 are present in both. But the category is based on unique words in the ground truth. If the ground truth's unique words are the digits, then OCR has some matches. But the problem states "unique words in the ground truth" — perhaps the entire number is considered a single word. 
+
+Alternatively, maybe the OCR output is supposed to capture the same digits. But in that case, the OCR output has 1,9,4,7 vs ground truth 1,2,7,8. So overlapping digits 1 and 7. But the category is based on words, not digits. So if the ground truth is one word, and the OCR output is another word, then they don't match. Hence category 3. But the problem says "small typos still count as matches". However, in this case, the OCR output is not a typo of the ground truth. The ground truth is 1278, and the OCR is 1947. The digits are different except for 1 and 7. But since the entire word is different, it's not a typo. So category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 213
+2. Slightly Correct Num: 108
+3. Incorrect Num: 561

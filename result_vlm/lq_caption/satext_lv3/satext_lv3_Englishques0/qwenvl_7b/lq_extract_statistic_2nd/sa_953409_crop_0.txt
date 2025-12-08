@@ -1,0 +1,28 @@
+img id: sa_953409_crop_0
+
+gt_text: HOTEL HOTEL
+vlm_output: HOTEL
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "HOTEL HOTEL", and the VLM OCR output is "HOTEL". 
+
+First, I need to extract the text content from the OCR output. The OCR output here is just "HOTEL". 
+
+Next, comparing this with the ground truth. The ground truth has two instances of "HOTEL", but the OCR output has one. The instructions say that word order doesn't matter, so I don't need to check the sequence. Also, we should consider the set of unique words in the ground truth. The ground truth's unique words are just {"HOTEL"} since both words are the same. 
+
+Now, checking the OCR output: it has "HOTEL" once. Since the unique words in the ground truth are only "HOTEL", and the OCR output contains that word (even once), all unique words from the ground truth are present. 
+
+The rules mention ignoring capitalization, but here both are uppercase, so that's not an issue. There's no punctuation or extra spaces to consider. The OCR output has exactly the same word as in the ground truth, so typos aren't a factor here. 
+
+Since the OCR output includes all unique words from the ground truth (even though it's missing one instance), according to category 1, which requires all unique ground truth words to appear in the OCR output, this should be category 1. 
+
+Wait, but the ground truth has two "HOTEL" words, but the OCR output has one. However, the instruction says to compare based on the set of unique words in the ground truth. Since the unique words are just "HOTEL", and the OCR output has that word, even once, it's sufficient. The number of occurrences doesn't matter, only the presence of the unique words. 
+
+So the answer is category 1.
+</think>
+LLM classification result: 1
+1. Correct Num: 178
+2. Slightly Correct Num: 88
+3. Incorrect Num: 476

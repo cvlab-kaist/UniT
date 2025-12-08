@@ -1,0 +1,28 @@
+img id: sa_999762_crop_1
+
+gt_text: good Good People people E E
+vlm_output: TRUEBREW
+
+----------------------------
+
+<think>
+Okay, let's see. The ground truth text is "good Good People people E E". The VLM OCR output is "TRUEBREW".
+
+First, I need to extract the text content from the OCR output. The OCR output is "TRUEBREW", which is a single word. Now, I have to compare this with the ground truth text. 
+
+The ground truth has the words: "good", "Good", "People", "people", "E", "E". But since we're considering unique words and ignoring case, the unique words are "good" (case-insensitive), "people", and "E". Wait, "E" is also present twice, but as unique words, it's just "E".
+
+Now, the OCR output is "TRUEBREW". Let's check if any of the unique ground truth words are present in the OCR output. The ground truth words are "good", "people", "E". The OCR output is "TRUEBREW". Let me check each letter. 
+
+Looking for "E" in "TRUEBREW": yes, there's an E. So that's a match. But the other words? "good" and "people" aren't present in "TRUEBREW". The OCR output is a single word that doesn't contain "good" or "people" as substrings. So the only match is "E".
+
+But according to the rules, the category is determined by whether the OCR output has all the unique ground truth words. Since "TRUEBREW" only has "E" matching, but not "good" or "people", that means not all unique words are present. So it's not category 1. 
+
+But wait, the category definitions say: category 1 is when all unique ground truth words appear in the OCR output. Since "TRUEBREW" only has "E" and not the others, it's not category 1. Category 2 is if at least one but not all match. So since "E" is present, but "good" and "people" are not, that would be category 2. 
+
+But wait, the ground truth has "good" and "People" (case-insensitive), so "good" and "people" as unique words. The OCR output has "TRUEBREW" which doesn't contain either of those words. So only "E" is present. So that's at least one match (E), but not all. Therefore, category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 251
+2. Slightly Correct Num: 113
+3. Incorrect Num: 635

@@ -1,0 +1,27 @@
+img id: sa_916315_crop_0
+
+gt_text: WOW air
+vlm_output: WOW
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The ground truth text is "WOW air", and the VLM OCR output is "WOW". 
+
+First, I need to extract the text content from the OCR output, which is straightforward here—it's just "WOW". 
+
+Next, comparing this with the ground truth. The ground truth has two unique words: "WOW" and "air". The OCR output only has "WOW". 
+
+The instructions say to consider word order doesn't matter, ignore capitalization, punctuation, and spacing. Also, small typos count as matches. But in this case, the OCR output is missing "air" entirely. 
+
+The categories are: 
+1 if all unique ground truth words are present in the OCR output. 
+2 if at least one but not all match. 
+3 if none match or it's unrelated.
+
+Since the OCR output has one of the two words ("WOW") but is missing "air", that would be category 2—partially correct. Even though "WOW" is exactly the same, the absence of "air" means not all words are present. So the answer should be 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 127
+2. Slightly Correct Num: 58
+3. Incorrect Num: 328

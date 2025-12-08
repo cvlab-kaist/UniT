@@ -1,0 +1,115 @@
+
+
+init:
+  seed: 42
+
+
+data:
+  train:
+    name: satext
+    # set the training hq_img_path below
+    hq_img_path: /mnt/dataset1/text_restoration/100K/train
+    # set the training ann_path
+    ann_path: /mnt/dataset1/text_restoration/100K/train/dataset.json
+    null_text_ratio: 0.1
+  val:
+    eval_lq_path:
+    vlm:
+      vlm_apply_at_iter:
+    added_prompt:
+    negative_prompt: 
+    save_prompts: 
+    sample_times:
+    guidance_scale: 
+    start_point:
+    latent_tiled_size: 
+    latent_tiled_overlap: 
+    upscale: 
+    process_size: 
+    num_inference_steps: 
+    align_method: 
+    
+
+model:
+  noise_scheduler:
+    weighting_scheme: logit_normal
+    logit_mean: 0.0
+    logit_std: 1.0 
+    mode_scale: 1.29
+    precondition_outputs: 1
+  dit:
+    name: dit4sr
+    resolution: 512
+    load_precomputed_vlm_caption: 
+    use_gtprompt: True
+    text_condition:
+      caption_style: descriptive
+  ts_module:
+    name: testr 
+
+
+ckpt:
+  init_path:
+    vae: preset/models/stable-diffusion-3.5-medium
+    noise_scheduler: preset/models/stable-diffusion-3.5-medium
+    tokenizer: preset/models/stable-diffusion-3.5-medium
+    text_encoder: preset/models/stable-diffusion-3.5-medium
+    dit: preset/models/dit4sr/dit4sr_q
+    ts_module:
+  resume_path:
+    dit: 
+    ts_module: 
+
+
+train:
+  stage: stage1
+  mixed_precision: fp16
+  model: ['transformer']
+  transformer:
+    architecture: dit4sr
+    lr: 1e-5
+    finetune_layer_names: [
+      'control_conv',
+      'to_q_control', 'to_k_control', 'to_v_control', 'to_out_control',
+      'to_q', 'to_k', 'to_v', 'to_out',   
+    ]
+  ts_module:
+    architecture: 
+    lr: 
+    finetune_layer_names: []
+    
+
+  # -----------------------------------------
+  #             MODIFY TRAINING 
+  # we recommend setting a large batch_size 
+  # and grad_accum_step for better loss drop
+  # -----------------------------------------
+  num_train_epochs: 1
+  batch_size: 1
+  num_workers: 4
+  gradient_accumulation_steps: 32
+  max_train_steps: 
+  lr_scheduler: "constant"
+  lr_warmup_steps: 0
+  lr_num_cycles: 1
+  lr_power: 1.0
+  max_grad_norm: 1.0
+  set_grads_to_none: False
+  scale_lr: False
+  use_8bit_adam: False
+  ocr_loss_weight:
+
+
+save:
+  output_dir: ./result_train/stage1
+  checkpointing_steps: 100
+
+
+log:
+  tracker: 
+    report_to: wandb
+    # set wandb authentication key for wandb logging
+    key: 
+    project_name: UniT
+    msg: "add_log_msg"  
+  log_dir: logs

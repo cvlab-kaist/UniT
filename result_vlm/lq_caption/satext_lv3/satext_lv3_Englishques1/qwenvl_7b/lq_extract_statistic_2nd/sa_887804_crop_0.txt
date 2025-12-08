@@ -1,0 +1,60 @@
+img id: sa_887804_crop_0
+
+gt_text: 911 Porschestraße Ing. Dr. Porsche h.c. Aktiengesellschaft Entwicklungszentrum F. STUTTGART
+vlm_output: PorscheExperienceCenter
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked here. The user provided a ground truth text and an OCR output from a VLM. They want me to categorize the OCR output as correct (1), slightly correct (2), or incorrect (3) based on specific criteria.
+
+The ground truth is: "911 Porschestraße Ing. Dr. Porsche h.c. Aktiengesellschaft Entwicklungszentrum F. STUTTGART"
+
+The OCR output is: "PorscheExperienceCenter"
+
+So, the first step is to extract the text content from the OCR output. That's straightforward—it's just "PorscheExperienceCenter". 
+
+Next, I need to compare this extracted text with the ground truth. The comparison rules are:
+
+- Word order doesn't matter.
+- Compare based only on the set of unique words in the ground truth.
+- Ignore capitalization, punctuation, and extra/missing spaces.
+- Small typos still count as matches.
+
+The categories are:
+
+1. Correct: all unique ground truth words appear in the OCR output.
+2. Slightly correct: at least one but not all unique words match.
+3. Incorrect: no words match, or the output is unrelated/empty.
+
+First, let's break down the ground truth into unique words. The original text is a bit complex. Let's split it into words, considering that some terms might be combined. Let's parse it:
+
+"911", "Porschestraße", "Ing.", "Dr.", "Porsche", "h.c.", "Aktiengesellschaft", "Entwicklungszentrum", "F.", "STUTTGART"
+
+Wait, but "Porschestraße" is a compound word. However, the OCR output is "PorscheExperienceCenter". Let me check if "Porsche" is present in the OCR output. Yes, "Porsche" is part of the OCR output. But the ground truth has "Porsche" as a separate word, and also "Porschestraße" which is a different term. However, the OCR output has "PorscheExperienceCenter" which combines "Porsche" with "ExperienceCenter". 
+
+But according to the rules, we need to compare the unique words in the ground truth. Let me list all unique words in the ground truth:
+
+1. 911
+2. Porschestraße
+3. Ing.
+4. Dr.
+5. Porsche
+6. h.c.
+7. Aktiengesellschaft
+8. Entwicklungszentrum
+9. F.
+10. STUTTGART
+
+So there are 10 unique words. Now, the OCR output is "PorscheExperienceCenter". Let's split this into words. The OCR output is a single word: "PorscheExperienceCenter". However, maybe it's supposed to be split into "Porsche", "Experience", "Center". But the problem says to compare based on the set of unique words in the ground truth. So the OCR output's words would be "Porsche", "Experience", "Center" (assuming splitting on capital letters or other boundaries). But the ground truth doesn't have "Experience" or "Center" as words. The ground truth has "Entwicklungszentrum" which is a German word meaning "development center", but the OCR output has "ExperienceCenter" which is an English term. 
+
+So the only word that matches between the OCR output and the ground truth is "Porsche". The rest of the words in the OCR output ("Experience", "Center") are not present in the ground truth. The ground truth has "Entwicklungszentrum", which is a different term. Also, the OCR output doesn't have "Porschestraße", "Ing.", "Dr.", "h.c.", "Aktiengesellschaft", "F.", or "STUTTGART".
+
+Therefore, only "Porsche" is present. Since the ground truth has 10 unique words, and the OCR output only matches one of them, this would be category 2: Slightly correct (partially correct). Because at least one word matches, but not all.
+
+Wait, but the category 1 is when all unique ground truth words appear in the OCR output. Since the OCR output has only "Porsche" (assuming that's the only match), and the rest are not present, it's not category 1. So category 2 applies here. Even though the OCR output has a typo (maybe "Porsche" is correct, but the rest are not), but according to the rules, small typos still count as matches. However, in this case, the OCR output doesn't have the other words. So the answer should be 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 90
+2. Slightly Correct Num: 39
+3. Incorrect Num: 225

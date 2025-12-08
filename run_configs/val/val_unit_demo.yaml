@@ -1,0 +1,109 @@
+
+
+init:
+  seed: 42
+
+
+data:
+  train:
+    name: 
+    hq_img_path: 
+    ann_path: 
+    null_text_ratio: 
+
+  val:
+    eval_lq_path: assets/demo_lq
+    vlm:
+      vlm_apply_at_iter: [10]
+    added_prompt:
+    negative_prompt: 
+    save_prompts: True
+    sample_times: 1
+    guidance_scale: 1.0
+    start_point: noise
+    latent_tiled_size: 64
+    latent_tiled_overlap: 24
+    upscale: 4
+    process_size: 512
+    num_inference_steps: 40
+    align_method: adain
+
+model:
+  noise_scheduler:
+    weighting_scheme: 
+    logit_mean: 
+    logit_std: 
+    mode_scale: 
+    precondition_outputs:
+  dit:
+    name: 
+    resolution: 
+    load_precomputed_caption: 
+    use_gtprompt: 
+    text_condition:
+      caption_style:
+  ts_module:
+    name:  
+
+
+ckpt:
+  init_path:
+    vae: preset/models/stable-diffusion-3.5-medium
+    noise_scheduler: preset/models/stable-diffusion-3.5-medium
+    tokenizer: preset/models/stable-diffusion-3.5-medium
+    text_encoder: preset/models/stable-diffusion-3.5-medium
+    dit: 
+    ts_module: 
+  resume_path:    
+    # ------------------------------------------
+    #     Set UniT pretrained weights here
+    # ------------------------------------------
+    dit: unit_ckpt/dit
+    ts_module: unit_ckpt/tsm.pt
+  
+
+train:
+  stage: 
+  mixed_precision: 'fp16'
+  model: ['transformer', 'ts_module']
+  transformer:
+    architecture: "dit4sr"
+    ocr_branch_init: 
+    lr: 
+    finetune_layer_names: []
+  ts_module:
+    architecture: testr
+    lr: 
+    finetune_layer_names: []
+  num_train_epochs: 
+  batch_size:        
+  num_workers: 
+  gradient_accumulation_steps: 
+  max_train_steps: 
+  lr_scheduler: 
+  lr_warmup_steps:
+  lr_num_cycles: 
+  lr_power: 
+  max_grad_norm: 
+  set_grads_to_none: 
+  scale_lr: 
+  use_8bit_adam: 
+  ocr_loss_weight: 
+val:
+  val_every_step: 
+
+
+save:
+  output_dir: ./result_val
+  checkpointing_steps:
+
+
+log:
+  tracker: 
+    report_to: 
+    key: 
+    project_name: 
+    server: 
+    gpu: 
+    msg: 
+  log_dir: logs

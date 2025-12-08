@@ -1,0 +1,29 @@
+img id: sa_89244_crop_0
+
+gt_text: BRISAS
+vlm_output: 2017-2018
+
+----------------------------
+
+<think>
+Okay, let's see here. The ground truth text is "BRISAS" and the VLM OCR output is "2017-2018". I need to figure out which category this falls into based on the steps provided.
+
+First, step 1 says to extract the text content from the OCR output. The OCR output here is "2017-2018". So the extracted text is just those numbers and the hyphen.
+
+Step 2 is comparing the extracted text with the ground truth. The instructions mention that word order doesn't matter, we compare based on the set of unique words in the ground truth. The ground truth is "BRISAS", which is a single word. So the unique words in the ground truth are just "BRISAS".
+
+Now, the comparison criteria: ignore capitalization, punctuation, extra/missing spaces. But the OCR output here is "2017-2018", which is numbers and a hyphen. The ground truth is "BRISAS", which is all letters. 
+
+The categories are:
+1 — Correct: all unique ground truth words appear in OCR output. But here, the OCR output has no letters, just numbers. So "BRISAS" isn't present in "2017-2018". Even if we ignore case and punctuation, the OCR output doesn't have any letters that match "BRISAS". 
+
+Category 2 is if at least one but not all unique words match. But the ground truth only has one unique word, and the OCR output doesn't have that word. So that's not applicable.
+
+Category 3 is incorrect: no words match, or output is unrelated. Since the OCR output has numbers and the ground truth is a word, there's no match. So this would be category 3.
+
+Wait, but the instructions say to compare based on the set of unique words in the ground truth. The OCR output's words are "2017" and "2018" (if we split by hyphen). But the ground truth's unique words are "BRISAS". None of the OCR words are related. So no matches. Therefore, category 3.
+</think>
+LLM classification result: 3
+1. Correct Num: 116
+2. Slightly Correct Num: 0
+3. Incorrect Num: 262

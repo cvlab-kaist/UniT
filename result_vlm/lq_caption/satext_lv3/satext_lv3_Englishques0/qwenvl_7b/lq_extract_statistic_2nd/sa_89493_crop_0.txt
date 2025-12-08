@@ -1,0 +1,58 @@
+img id: sa_89493_crop_0
+
+gt_text: demande permis DRIVE construire ICI de de L E.Leclerc Leclerc
+vlm_output: ICIdemande de permis de construireE.LeclercDRIVE
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. The user wants me to compare the OCR output with the ground truth text based on specific criteria. Let me start by understanding both texts.
+
+The ground truth is: "demande permis DRIVE construire ICI de de L E.Leclerc Leclerc". Breaking this down, the unique words here are "demande", "permis", "DRIVE", "construire", "ICI", "de", "L", "E.Leclerc", "Leclerc". Wait, "de" appears twice, but since we're considering unique words, it's just once. Also, "Leclerc" is mentioned twice, but again, unique. So the unique words are: demande, permis, DRIVE, construire, ICI, de, L, E.Leclerc, Leclerc.
+
+Now the OCR output is: "ICIdemande de permis de construireE.LeclercDRIVE". Let's split this into words. It's a bit tricky because there are no spaces, but maybe the OCR output is "ICI demande de permis de construire E.Leclerc DRIVE" if we split by possible word boundaries. However, the original OCR output is written as one string: "ICIdemande de permis de construireE.LeclercDRIVE". Let me parse this carefully. 
+
+Breaking it down:
+
+- "ICI" is a word (starts with uppercase, but we ignore case)
+- "demande" is next, separated by a space
+- "de" is next
+- "permis" next
+- "de" again
+- "construire" next
+- "E.Leclerc" (since there's no space between "construire" and "E.Leclerc", but maybe the OCR missed a space here. Wait, the original OCR output is "construireE.LeclercDRIVE". So "construire" is followed by "E.Leclerc" without a space, then "DRIVE" without a space. So maybe the OCR output is "construireE.LeclercDRIVE" as a single part. But how to split that into words? Hmm. This is a bit ambiguous. Alternatively, maybe the OCR output is "ICI demande de permis de construire E.Leclerc DRIVE" with the correct spacing, but the actual output is written as "ICIdemande de permis de construireE.LeclercDRIVE" with no space between "construire" and "E.Leclerc", and between "E.Leclerc" and "DRIVE".
+
+Assuming that the OCR output is "ICI demande de permis de construire E.Leclerc DRIVE", even if the original string is concatenated, the words would be: ICI, demande, de, permis, de, construire, E.Leclerc, DRIVE. 
+
+Comparing this to the ground truth unique words: 
+
+Ground truth words: demande, permis, DRIVE, construire, ICI, de, L, E.Leclerc, Leclerc.
+
+OCR output words (assuming correct splitting): ICI, demande, de, permis, de, construire, E.Leclerc, DRIVE.
+
+So checking each unique ground truth word:
+
+- "demande" is present in OCR.
+- "permis" is present.
+- "DRIVE" is present (case doesn't matter, so "DRIVE" matches).
+- "construire" is present.
+- "ICI" is present.
+- "de" is present.
+- "L" is not present in OCR output. The ground truth has "L" as a separate word, but OCR has "E.Leclerc" which includes "L" as part of the name. However, the problem says to compare based on the set of unique words in the ground truth. The ground truth has "L" as a standalone word, but the OCR output has "E.Leclerc" which is a different word. So "L" is not present in the OCR output.
+- "E.Leclerc" is present in OCR.
+- "Leclerc" is present in the ground truth but not in the OCR output. The OCR has "E.Leclerc" but not "Leclerc" as a separate word.
+
+So, the OCR output includes all the ground truth words except "L" and "Leclerc". Wait, but the ground truth has "E.Leclerc" and "Leclerc" as separate words. The OCR has "E.Leclerc" but not "Leclerc". So "Leclerc" is missing. Also, "L" is missing. So the OCR output is missing two unique words from the ground truth. However, the problem says to compare based only on the set of unique words in the ground truth. So even if the OCR has "E.Leclerc" which includes "L", but "L" is a separate word in the ground truth, that's not considered a match. Therefore, the OCR output is missing "L" and "Leclerc" from the ground truth's unique words.
+
+But wait, the ground truth has "L" as a separate word, and "E.Leclerc" as another. The OCR has "E.Leclerc" but not "L" or "Leclerc". So the OCR output is missing two words. However, the question says to compare based on the set of unique words in the ground truth. So, the OCR output must have all those unique words. Since it's missing "L" and "Leclerc", that would mean it's not a full match. But the category 1 is "all unique ground truth words appear in the OCR output". Since two are missing, it's not category 1. Then, category 2 is "at least one but not all unique words match". So in this case, how many words are matched?
+
+Ground truth unique words: 9 (demande, permis, DRIVE, construire, ICI, de, L, E.Leclerc, Leclerc).
+
+OCR output has: ICI, demande, de, permis, construire, E.Leclerc, DRIVE. That's 7 words. So 7 out of 9. So it's missing two. Therefore, it's not category 1, but category 2 (since at least one, but not all). However, the problem says "based only on the set of unique words in the ground truth". So if the OCR has all except some, it's category 2. So the answer would be 2.
+
+But wait, the user instructions say: "Compare based only on the set of unique words in the ground truth." So the OCR output must contain all the unique words from the ground truth. If it's missing any, then it's not category 1. Since the OCR output is missing "L" and "Leclerc", it's category 2. Therefore, the answer is 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 100
+2. Slightly Correct Num: 42
+3. Incorrect Num: 249

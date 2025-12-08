@@ -1,0 +1,85 @@
+img id: sa_89493_crop_0
+
+gt_text: demande permis DRIVE construire ICI de de L E.Leclerc Leclerc
+vlm_output: ICIdemande de permis de construireE.LeclercDRIVE
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked. The user provided a ground truth text and an OCR output from a VLM. My job is to categorize the OCR output as Correct (1), Slightly correct (2), or Incorrect (3) based on specific criteria.
+
+Starting with the ground truth text: "demande permis DRIVE construire ICI de de L E.Leclerc Leclerc". The OCR output is "ICIdemande de permis de construireE.LeclercDRIVE".
+
+Step 1 is to extract the text content from the OCR output. The OCR output is already given as a string, so that's straightforward. Now, Step 2 involves comparing the extracted text with the ground truth, considering several factors: word order doesn't matter, compare based on unique words from the ground truth, ignore capitalization, punctuation, spaces, and small typos.
+
+First, I need to process both texts. Let me break down the ground truth and the OCR output into their components, ignoring case, punctuation, and extra spaces. Also, I need to consider unique words in the ground truth.
+
+Ground truth words (ignoring case, punctuation, spaces, and considering unique words):
+- demande
+- permis
+- DRIVE
+- construire
+- ICI
+- de
+- L
+- E.Leclerc
+- Leclerc
+
+Wait, but "de" appears twice in the ground truth, but since we're considering unique words, it's just once. Similarly, "Leclerc" appears twice, but again, unique. Also, "L" and "E.Leclerc" are separate. Let me list them all as unique words.
+
+Now the OCR output: "ICIdemande de permis de construireE.LeclercDRIVE". Let's process this similarly. Breaking it down into words, ignoring case and punctuation, and considering possible word splits. However, OCR outputs can sometimes have merged words. For example, "construireE.Leclerc" might be "construire" and "E.Leclerc", but maybe "construireE.Leclerc" is a mistake. Similarly, "DRIVE" is at the end, but in the ground truth, "DRIVE" is a separate word. Let's split the OCR output into words as per possible splits, considering that OCR might have merged words.
+
+OCR output split: "ICI", "demande", "de", "permis", "de", "construire", "E.Leclerc", "DRIVE".
+
+Now, let's compare the unique words from the ground truth with those in the OCR output.
+
+Ground truth unique words:
+- demande
+- permis
+- DRIVE
+- construire
+- ICI
+- de
+- L
+- E.Leclerc
+- Leclerc
+
+OCR output unique words:
+- ICI
+- demande
+- de
+- permis
+- construire
+- E.Leclerc
+- DRIVE
+
+Now, let's check which of the ground truth words are present in the OCR output. 
+
+"demanded" is present. "permis" is there. "DRIVE" is there. "construire" is there. "ICI" is there. "de" is there. "E.Leclerc" is there. 
+
+But the ground truth has "L" and "Leclerc" as separate words. However, in the OCR output, "E.Leclerc" is present, but "Leclerc" is not. Also, "L" is missing. 
+
+Wait, the ground truth has "L E.Leclerc Leclerc". So "L" is a separate word, "E.Leclerc" and "Leclerc" are two separate words. In the OCR output, "E.Leclerc" is present, but "Leclerc" is not. However, "E.Leclerc" could be considered as a typo or a merged version of "E.Leclerc" and "Leclerc"? But according to the instructions, small typos still count as matches. Wait, but "Leclerc" is not present in the OCR output. However, "E.Leclerc" is present. But in the ground truth, "E.Leclerc" and "Leclerc" are two separate words. So the OCR output has "E.Leclerc" but not "Leclerc". Also, the ground truth has "L" which is not present in the OCR output. 
+
+So, the unique words from the ground truth that are present in the OCR output are: demande, permis, DRIVE, construire, ICI, de, E.Leclerc. That's 7 out of 9 unique words. The missing ones are "L" and "Leclerc". 
+
+But wait, "Leclerc" is in the ground truth. Is there a possibility that "E.Leclerc" in the OCR output is a typo or merged version that could be considered as "Leclerc"? The instruction says small typos still count as matches. However, "E.Leclerc" vs "Leclerc" is not a small typo; it's a different name. The "E." prefix is missing in "Leclerc" compared to "E.Leclerc". So "E.Leclerc" is not a typo of "Leclerc" but a different entity. Therefore, "Leclerc" is not present in the OCR output. 
+
+Additionally, "L" is missing. So the OCR output is missing two unique words from the ground truth: "L" and "Leclerc". 
+
+But the category is based on whether all unique ground truth words are present. Since two are missing, does that make it category 2 (partially correct) or category 3 (incorrect)? The categories are:
+
+1 — Correct: all unique ground truth words appear in the OCR output.
+
+2 — Slightly correct (partially correct): at least one but not all unique words match.
+
+3 — Incorrect: no words match, or the output is largely wrong, unrelated, or empty.
+
+In this case, the OCR output has 7 out of 9 unique words. So that's not all, but more than one. Therefore, it's category 2. But wait, the instruction says "at least one but not all unique words match". So since some words are present (more than one), but not all, it's category 2.
+
+But wait, the user's ground truth includes "L" and "Leclerc", which are not in the OCR output. However, the OCR output has "E.Leclerc", which is a different term. So the unique words in ground truth are 9, and the OCR output has 7 of them. So it's partially correct, hence category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 97
+2. Slightly Correct Num: 43
+3. Incorrect Num: 251

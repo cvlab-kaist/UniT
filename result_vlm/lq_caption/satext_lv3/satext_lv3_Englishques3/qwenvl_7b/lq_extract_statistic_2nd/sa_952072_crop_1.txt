@@ -1,0 +1,49 @@
+img id: sa_952072_crop_1
+
+gt_text: PASSAGE LHOMME 26 Arrt 11e
+vlm_output: VANCOUVER LANE WO
+
+----------------------------
+
+<think>
+Okay, let's tackle this problem step by step. First, I need to understand what's being asked here. The user provided a ground truth text and an OCR output from a VLM. They want me to categorize the OCR output as Correct (1), Slightly correct (2), or Incorrect (3) based on specific criteria.
+
+So, the ground truth is "PASSAGE LHOMME 26 Arrt 11e" and the OCR output is "VANCOUVER LANE WO". Let me start by breaking down the steps outlined.
+
+Step 1 is to extract the text content from the VLM OCR output. That seems straightforward. The OCR output is "VANCOUVER LANE WO". I need to consider this as the extracted text.
+
+Step 2 involves comparing this extracted text with the ground truth, considering several factors: word order doesn't matter, compare based on unique words in the ground truth, ignore capitalization, punctuation, and extra/missing spaces, and small typos still count as matches.
+
+The categories are:
+1 — Correct: all unique ground truth words appear in the OCR output.
+2 — Slightly correct: at least one but not all unique words match.
+3 — Incorrect: no words match, or output is unrelated/empty.
+
+First, I need to identify the unique words in the ground truth. Let's process the ground truth text: "PASSAGE LHOMME 26 Arrt 11e". Let's split into words, considering that numbers and abbreviations might be part of words. However, the problem says to compare based on the set of unique words in the ground truth. So, splitting by spaces:
+
+Ground truth words: PASSAGE, LHOMME, 26, Arrt, 11e.
+
+Wait, but "Arrt" and "11e" might be abbreviations or parts of words. But according to the instructions, we should take the unique words as they are. So, the unique words in ground truth are: PASSAGE, LHOMME, 26, Arrt, 11e.
+
+Now, the OCR output is "VANCOUVER LANE WO". Let's split that into words: VANCOUVER, LANE, WO.
+
+Next, compare these OCR words with the ground truth words, ignoring case, punctuation, spacing, and considering small typos. Also, word order doesn't matter.
+
+Let me process each OCR word and check if they match any of the ground truth words.
+
+First, "VANCOUVER" – does this match any ground truth word? The ground truth words are PASSAGE, LHOMME, 26, Arrt, 11e. None of these seem related to "VANCOUVER". No match here.
+
+Next, "LANE" – again, not matching any of the ground truth words. The ground truth has "PASSAGE", "LHOMME", numbers, etc. "LANE" is a different word.
+
+Third, "WO" – this might be a typo. Let me check the ground truth words again. The ground truth has "Arrt" and "11e". "WO" doesn't seem to match any of those. However, "Arrt" could be a typo for "Art" or "Arrêt" (if it's French, but the OCR might have misread it). But according to the problem statement, small typos still count as matches. However, "WO" doesn't look like a typo for any of the ground truth words. "Arrt" is a typo for "Arrêt" (if it's French for "article"), but "WO" doesn't relate to that. Alternatively, "WO" could be a misread of "11e" (like "11e" being "11th" in French, but "WO" doesn't match that either).
+
+Wait, maybe I should check if any of the OCR words could be a typo for the ground truth words. For example, "VANCOUVER" could be a misread of "PASSAGE"? No, that's not similar. "LANE" vs. "LHOMME"? Not really. "WO" vs. "26"? No. "WO" vs. "Arrt"? No. "WO" vs. "11e"? No. So none of the OCR words match the ground truth words even with typos.
+
+Therefore, the OCR output has none of the unique words from the ground truth. So according to the categories, that would be category 3: Incorrect. But wait, let me double-check.
+
+Wait, the ground truth has "Arrt" which might be a typo. If the OCR output had "Arrt" or something close, but the OCR output is "VANCOUVER LANE WO". No match. So all three OCR words don't match any of the ground truth words. Therefore, category 3 is the answer.
+</think>
+LLM classification result: 3
+1. Correct Num: 168
+2. Slightly Correct Num: 89
+3. Incorrect Num: 474

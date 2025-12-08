@@ -1,0 +1,24 @@
+img id: sa_97611_crop_0
+
+gt_text: NE BHARATMALA ROAD TO 3 PROSPERITY
+vlm_output: The image shows a sign with the text "NE 3" and below it, partially obscured, appears to be "BRAZILIA". The background is blurred, making it difficult to discern other details.
+
+----------------------------
+
+<think>
+Okay, let's tackle this step by step. First, I need to extract the text content from the VLM OCR output. The OCR says: "The image shows a sign with the text 'NE 3' and below it, partially obscured, appears to be 'BRAZILIA'. The background is blurred, making it difficult to discern other details." So the extracted text here would be "NE 3 BRAZILIA".
+
+Now, the ground truth is "NE BHARATMALA ROAD TO 3 PROSPERITY". Let me break down the unique words in the ground truth. The words are: NE, BHARATMALA, ROAD, TO, 3, PROSPERITY. So that's six unique words.
+
+Next, comparing the OCR output's text to these. The OCR has NE, 3, and BRAZILIA. Let's check each word against the ground truth. NE and 3 are present in both. However, BRAZILIA isn't in the ground truth. The ground truth has BHARATMALA, ROAD, TO, and PROSPERITY, which are not in the OCR output. 
+
+Wait, the instruction says to compare based only on the set of unique words in the ground truth. So we need to check if any of the OCR's words match the ground truth's unique words. The OCR has NE and 3, which are in the ground truth. The rest of the OCR words (BRAZILIA) are not in the ground truth. So that's two matches out of six unique ground truth words. 
+
+The categories are: 1 if all unique ground truth words are present, 2 if at least one but not all, and 3 otherwise. Since there are two matches (NE and 3), that's at least one, so category 2. 
+
+But wait, the user mentioned that small typos still count as matches. However, in this case, there's no typo; the OCR has BRAZILIA instead of BHARATMALA. That's a different word, not a typo. So it doesn't count. So only NE and 3 are matches. That's two out of six, so category 2.
+</think>
+LLM classification result: 2
+1. Correct Num: 216
+2. Slightly Correct Num: 107
+3. Incorrect Num: 544
