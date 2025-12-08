@@ -59,7 +59,7 @@ pip install cloudpickle --no-deps
 
 Download the respective model weights by running the respective bash files below.
 
-- Stable Diffusion3 Weights (vae, noise scheduler, tokenizer, etc)
+- **Stable Diffusion3 Weights (vae, noise scheduler, tokenizer, etc)**
 ```bash
 # Authenticate with your HF access token
 huggingface-cli login   
@@ -67,13 +67,13 @@ huggingface-cli login
 bash download_bash/download_sd3.sh 
 ```
 
-- Text Spotting Module (TSM) Weights 
+- **Text Spotting Module (TSM) Weights**
 ```bash
 # Required for training only
 bash download_bash/download_testr.sh 
 ```
 
-- Diffusion Transformer (DiT) Weights
+- **Diffusion Transformer (DiT) Weights**
 ```bash
 # Required for training only
 bash download_bash/download_testr.sh 
@@ -92,7 +92,7 @@ bash run_scripts/val/run_val_unit_demo.sh
 
 
 ### Demo Result
-Running the demo inference script will generate the following text restoration results. The visualized images are shown in the order: Low-Quality (LQ) image / Restored image / High-Quality (HQ) Ground Truth image.
+Running the demo inference script will generate the following text restoration results. The visualized images are shown in the order: **Low-Quality image / Restored High-Quality image / Ground Truth image.**
 <p align="center">
   <img src="assets/demo_result/demo1.png" width="800">
 </p>
