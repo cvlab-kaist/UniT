@@ -9,11 +9,11 @@ UniT: Unified Diffusion Transformer for High-fidelity Text-Aware Image Restorati
 
 [**Jaewon Min**](https://github.com/Min-Jaewon/)<sup>1</sup>, 
 [**Jaeeun Lee**](https://github.com/babywhale03)<sup>2</sup>,
-**Jihye Park**<sup>2</sup>, **Yeji Choi**<sup>1</sup>, [**Seungryong Kim**](https://scholar.google.com/citations?hl=zh-CN&user=cIK1hS8AAAAJ)<sup>1&dagger;</sup>
+**Jihye Park**<sup>2</sup>, **Yeji Choi**<sup>1</sup>, [**Seungryong Kim**](https://scholar.google.com/citations?hl=zh-CN&user=cIK1hS8AAAAJ)<sup>1</sup>
 
-<sup>1</sup> KAIST&nbsp;AI ·
+<sup>1</sup> KAIST&nbsp;AI 
+
 <sup>2</sup> Samsung&nbsp;Electronics
-<sup>&dagger;</sup>Corresponding Author.
 
 <a href=""><img src="https://img.shields.io/badge/arXiv-2512"></a>
         <a href="https://cvlab-kaist.github.io/UniT/"><img src="https://img.shields.io/badge/Project%20Page-online-1E90FF"></a>
