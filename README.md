@@ -143,4 +143,4 @@ bash run_scripts/train/JIHYE_train_stage2_testr.sh
 ```
 
 ## Acknowledgement
-We thank the authors of [DiT4SR](https://github.com/facebookresearch/vggt), [TAIR](https://github.com/cvlab-kaist/TAIR), and [TESTR](https://github.com/mlpc-ucsd/TESTR) for their excellent work and code, which served as the foundation for this project.
+We thank the authors of [DiT4SR](https://github.com/Adam-duan/DiT4SR), [TAIR](https://github.com/cvlab-kaist/TAIR), and [TESTR](https://github.com/mlpc-ucsd/TESTR) for their excellent work and code, which served as the foundation for this project.
