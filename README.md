@@ -3,16 +3,15 @@
 UniT: Unified Diffusion Transformer for High-fidelity Text-Aware Image Restoration</h1>
 
 
-[**Jin Hyeon Kim**](https://github.com/jinlovespho)<sup>1</sup>,
-**Paul Hyunbin Cho**<sup>1</sup>, 
-**Claire Kim**<sup>1</sup>,
+[**Jin Hyeon Kim**](https://github.com/jinlovespho)<sup>1</sup>,&nbsp;&nbsp;
+**Paul Hyunbin Cho**<sup>1</sup>,&nbsp;&nbsp;
+**Claire Kim**<sup>1</sup>,&nbsp;&nbsp;
 
-[**Jaewon Min**](https://github.com/Min-Jaewon/)<sup>1</sup>, 
-[**Jaeeun Lee**](https://github.com/babywhale03)<sup>2</sup>,
-**Jihye Park**<sup>2</sup>, **Yeji Choi**<sup>1</sup>, [**Seungryong Kim**](https://scholar.google.com/citations?hl=zh-CN&user=cIK1hS8AAAAJ)<sup>1</sup>
+[**Jaewon Min**](https://github.com/Min-Jaewon/)<sup>1</sup>,&nbsp;&nbsp; 
+[**Jaeeun Lee**](https://github.com/babywhale03)<sup>2</sup>,&nbsp;&nbsp;
+**Jihye Park**<sup>2</sup>,&nbsp;&nbsp; **Yeji Choi**<sup>1</sup>,&nbsp;&nbsp; [**Seungryong Kim**](https://scholar.google.com/citations?hl=zh-CN&user=cIK1hS8AAAAJ)<sup>1</sup>
 
-<sup>1</sup> KAIST&nbsp;AI 
-
+<sup>1</sup> KAIST&nbsp;AI &nbsp;&nbsp;&nbsp;
 <sup>2</sup> Samsung&nbsp;Electronics
 
 <a href=""><img src="https://img.shields.io/badge/arXiv-2512"></a>
