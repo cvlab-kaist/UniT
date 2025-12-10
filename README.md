@@ -14,16 +14,18 @@ UniT: Unified Diffusion Transformer for High-fidelity Text-Aware Image Restorati
 <sup>1</sup> KAIST&nbsp;AI &nbsp;&nbsp;&nbsp;
 <sup>2</sup> Samsung&nbsp;Electronics
 
-<a href=""><img src="https://img.shields.io/badge/arXiv-2512"></a>
+<a href="https://arxiv.org/abs/2512.08922">
+  <img src="https://img.shields.io/badge/arXiv-2512.08922-B31B1B">
+</a>
         <a href="https://cvlab-kaist.github.io/UniT/"><img src="https://img.shields.io/badge/Project%20Page-online-1E90FF"></a>
 </div>
 
 
 # 🔈 News 
-- [ ] 📄 Arxiv paper coming soon.
 - [ ] 🔥Training code coming soon.
+- [x] 📄 **2025.12.10** — Arxiv paper released!
 - [x] ⚔️ **2025.12.10** — Demo inference code released!
-- [x] 🚀 **2025.12.09** — Official launch of the repository and project page!
+- [x] 🚀 **2025.12.00** — Official launch of the repository and project page!
 
 
 
@@ -139,7 +141,12 @@ bash run_scripts/train/JIHYE_train_stage2_testr.sh
 ## Citation
 
 ```
-
+@article{kim2025unit,
+  title={Unified Diffusion Transformer for High-fidelity Text-Aware Image Restoration},
+  author={Kim, Jin Hyeon and Cho, Paul Hyunbin and Kim, Claire and Min, Jaewon and Lee, Jaeeun and Park, Jihye and Choi, Yeji and Kim, Seungryong},
+  journal={arXiv preprint arXiv:2512.08922},
+  year={2025},
+}
 ```
 
 ## Acknowledgement
