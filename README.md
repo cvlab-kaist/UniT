@@ -25,7 +25,7 @@ UniT: Unified Diffusion Transformer for High-fidelity Text-Aware Image Restorati
 - [ ] 🔥Training code coming soon.
 - [x] 📄 **2025.12.10** — Arxiv paper released!
 - [x] ⚔️ **2025.12.10** — Demo inference code released!
-- [x] 🚀 **2025.12.00** — Official launch of the repository and project page!
+- [x] 🚀 **2025.12.09** — Official launch of the repository and project page!
 
 
 
