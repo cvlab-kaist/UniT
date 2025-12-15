@@ -77,7 +77,7 @@ bash download_bash/download_testr.sh
 - **Diffusion Transformer (DiT) Weights**
 ```bash
 # Required for training only
-bash download_bash/download_testr.sh 
+bash download_bash/download_dit4sr.sh
 ```
 
 
