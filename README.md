@@ -8,7 +8,7 @@ UniT: Unified Diffusion Transformer for High-fidelity Text-Aware Image Restorati
 **Claire Kim**<sup>1</sup>,&nbsp;&nbsp;
 
 [**Jaewon Min**](https://github.com/Min-Jaewon/)<sup>1</sup>,&nbsp;&nbsp; 
-[**Jaeeun Lee**](https://github.com/babywhale03)<sup>2</sup>,&nbsp;&nbsp;
+[**Jaeeun Lee**](https://github.com/babywhale03)<sup>1</sup>,&nbsp;&nbsp;
 **Jihye Park**<sup>2</sup>,&nbsp;&nbsp; **Yeji Choi**<sup>1</sup>,&nbsp;&nbsp; [**Seungryong Kim**](https://scholar.google.com/citations?hl=zh-CN&user=cIK1hS8AAAAJ)<sup>1</sup>
 
 <sup>1</sup> KAIST&nbsp;AI &nbsp;&nbsp;&nbsp;
